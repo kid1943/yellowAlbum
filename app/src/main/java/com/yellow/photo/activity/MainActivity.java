@@ -142,11 +142,9 @@ public class MainActivity extends Activity {
 		private LayoutInflater inflater;
 		private int selectedPosition = -1;
 		private boolean shape;
-
 		public boolean isShape() {
 			return shape;
 		}
-
 		public void setShape(boolean shape) {
 			this.shape = shape;
 		}
@@ -255,10 +253,11 @@ public class MainActivity extends Activity {
 		return path;
 	}
 
-	protected void onRestart() {
-		adapter.update();
-		super.onRestart();
-	}
+	 @Override
+	 protected void onStart() {
+		 adapter.update();
+		 super.onStart();
+	 }
 
 	private static final int TAKE_PICTURE = 0x000001;
 
@@ -271,18 +270,15 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case TAKE_PICTURE:
-			if (AlbumGlobalUtils.totalSelectImgs.size() < 4
-					&& resultCode == RESULT_OK) {
+			if (AlbumGlobalUtils.totalSelectImgs.size() < 4 && resultCode == RESULT_OK) {
 				String sdPath = null;
 				String fileName = String.valueOf(System.currentTimeMillis());
 				Bitmap bm = (Bitmap) data.getExtras().get("data");
 				
 				if(!TextUtils.isEmpty(AlbumGlobalUtils.takePhotoFolder)){
-					sdPath = Environment.getExternalStorageDirectory()
-							+ "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
+					sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
 				}else{
-					sdPath = Environment.getExternalStorageDirectory()
-							+ "/Photo_LJ/";	
+					sdPath = Environment.getExternalStorageDirectory() + "/Yellow/";
 				}
 				FileUtils.saveBitmap(bm, fileName);
              		
