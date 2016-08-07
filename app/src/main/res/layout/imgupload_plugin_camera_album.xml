@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/headview"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/s50"
         android:background="@color/red"
         android:gravity="center_vertical" >
@@ -59,7 +59,7 @@
 
     <GridView
         android:id="@+id/myGrid"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headview"
         android:layout_centerInParent="true"

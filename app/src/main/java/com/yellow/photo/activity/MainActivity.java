@@ -183,8 +183,7 @@ public class MainActivity extends Activity {
 				convertView = inflater.inflate(
 						R.layout.imgupload_item_published_grida, parent, false);
 				holder = new ViewHolder();
-				holder.image = (ImageView) convertView
-						.findViewById(R.id.item_grida_image);
+				holder.image = (ImageView) convertView.findViewById(R.id.item_grida_image);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
