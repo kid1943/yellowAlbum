@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.PopupWindow.OnDismissListener;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.yellow.clippic.ClipImgActivity;
 import com.yellow.photo.adapter.AlbumGridViewAdapter;
@@ -140,7 +140,6 @@ public class AlbumActivity extends BaseActivty {
 		public void onClick(View v) {
 			overridePendingTransition(R.anim.activity_translate_in,R.anim.activity_translate_out);
 			AlbumGlobalUtils.back2MainActivity(AlbumActivity.this);
-//			clearData();
 			AlbumActivity.this.finish();
 		}
 	}

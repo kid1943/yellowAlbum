@@ -1,6 +1,6 @@
 package com.yellow.photo.popupwin;
 
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.photo.adapter.FolderAdapter;
 import com.yellow.photo.adapter.FolderAdapter.FolderSelectListener;
 

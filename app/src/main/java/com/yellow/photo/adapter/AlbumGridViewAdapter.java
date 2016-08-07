@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.BitmapCache;

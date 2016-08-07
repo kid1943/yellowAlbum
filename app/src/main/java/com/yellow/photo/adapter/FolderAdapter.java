@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yellow.photo.activity.AlbumActivity;
@@ -27,10 +27,6 @@ import com.yellow.photo.util.BitmapCache.ImageCallback;
 
 /**
  * 这个是显示所有包含图片的文件夹的适配器
- * 
- * @author king
- * @QQ:595163260
- * @version 2014年10月18日 下午11:49:44
  */
 public class FolderAdapter extends BaseAdapter {
 

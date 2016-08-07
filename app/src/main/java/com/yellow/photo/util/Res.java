@@ -7,10 +7,6 @@ import android.graphics.drawable.Drawable;
 
 /**
  * 加载R文件里面的内容
- * 
- * @author king
- * @QQ:595163260
- * @version 2014年10月18日  下午11:46:29
  */
 public class Res {
 

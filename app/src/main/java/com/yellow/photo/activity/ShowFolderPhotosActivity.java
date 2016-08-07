@@ -30,10 +30,8 @@ import com.yellow.photo.util.Res;
 
 /**
  * 这个是显示一个文件夹里面的所有图片时的界面
- * 
- * @author king
- * @QQ:595163260
- * @version 2014年10月18日 下午11:49:10
+ *
+ * @version 2015年10月18日 下午11:49:10
  */
 public class ShowFolderPhotosActivity extends BaseActivty {
 	private GridView gridView;

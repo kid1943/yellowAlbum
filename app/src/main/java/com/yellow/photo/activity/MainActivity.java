@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
@@ -42,7 +43,7 @@ import com.yellow.photo.util.Res;
 
  /**
   *测试界面
-  * Created by yellow on 14:59  2016/5/28.
+  * Created by yellow on 14:59  2016/5/28.onKeyDown
   */
 public class MainActivity extends Activity {
 
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("MainActivity", "onCreate####");
 		// 入口Activity的全类名
 		AlbumGlobalUtils.MainActivityName = this.getClass().getName();
 		AlbumGlobalUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
@@ -63,6 +65,14 @@ public class MainActivity extends Activity {
 		setContentView(parentView);
 		init();
 	}
+
+
+	 @Override
+	 protected void onStart() {
+		 Log.i("MainActivity", "onStart####");
+//		 adapter.update();
+		 super.onStart();
+	 }
 
 	public void init() {
 		pop = new PopupWindow(MainActivity.this);
@@ -77,7 +87,7 @@ public class MainActivity extends Activity {
 		pop.setContentView(view);
 		RelativeLayout parent = (RelativeLayout) view.findViewById(Res.getWidgetID("parent"));
 		Button bt1 = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_camera"));
-		Button bt2 = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_Photo"));
+		Button go2Album = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_Photo"));
 		Button bt3 = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_cancel"));
 		parent.setOnClickListener(new OnClickListener() {
 
@@ -96,7 +106,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		bt2.setOnClickListener(new OnClickListener() {
+		go2Album.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this, AlbumActivity.class);
 				intent.putExtra("ActivityName", MainActivity.this.getClass().getName());// 获取完整类名传递给要调用的Activity
@@ -180,8 +190,7 @@ public class MainActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = inflater.inflate(
-						R.layout.imgupload_item_published_grida, parent, false);
+				convertView = inflater.inflate(R.layout.imgupload_item_published_grida, parent, false);
 				holder = new ViewHolder();
 				holder.image = (ImageView) convertView.findViewById(R.id.item_grida_image);
 				convertView.setTag(holder);
@@ -190,13 +199,10 @@ public class MainActivity extends Activity {
 			}
 
 			if (position == 0) {
-				holder.image.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), R.drawable.icon_addpic_unfocused));
+				holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused));
 			} else {
-				holder.image.setImageBitmap(AlbumGlobalUtils.totalSelectImgs
-						.get(position - 1).getBitmap());
-				holder.imgPath = AlbumGlobalUtils.totalSelectImgs
-						.get(position - 1).imagePath;
+				holder.image.setImageBitmap(AlbumGlobalUtils.totalSelectImgs.get(position - 1).getBitmap());
+				holder.imgPath = AlbumGlobalUtils.totalSelectImgs.get(position - 1).imagePath;
 				// 在这里设置图片的路径
 				// tempSelectBitmap图片集合不包括"加"图片
 			}
@@ -215,17 +221,11 @@ public class MainActivity extends Activity {
 		};
 
 		public void loading() {
-			new Thread(new Runnable() {
-				public void run() {
-					while (true) {
-						if (AlbumGlobalUtils.max == AlbumGlobalUtils.totalSelectImgs
-								.size()) {
+						if (AlbumGlobalUtils.max == AlbumGlobalUtils.totalSelectImgs.size()) {
 							Message message = new Message();
 							message.what = 1;
 							handler.sendMessage(message);
-							break;// 注意这里有个break
-						} else if (AlbumGlobalUtils.max < AlbumGlobalUtils.totalSelectImgs
-								.size()) {
+						} else if (AlbumGlobalUtils.max < AlbumGlobalUtils.totalSelectImgs.size()) {
 							AlbumGlobalUtils.max += 1;
 							Message message = new Message();
 							message.what = 1;
@@ -237,9 +237,6 @@ public class MainActivity extends Activity {
 							handler.sendMessage(message);
 						}
 					}
-				}
-			}).start();
-		}
 	}
 
 	public String getString(String s) {
@@ -252,11 +249,6 @@ public class MainActivity extends Activity {
 		return path;
 	}
 
-	 @Override
-	 protected void onStart() {
-		 adapter.update();
-		 super.onStart();
-	 }
 
 	private static final int TAKE_PICTURE = 0x000001;
 
@@ -267,7 +259,7 @@ public class MainActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
+/*		switch (requestCode) {
 		case TAKE_PICTURE:
 			if (AlbumGlobalUtils.totalSelectImgs.size() < 4 && resultCode == RESULT_OK) {
 				String sdPath = null;
@@ -287,10 +279,10 @@ public class MainActivity extends Activity {
 				AlbumGlobalUtils.totalSelectImgs.add(takePhoto);
 			}
 			break;
-		}
+		}*/
 	}
 
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+/*	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			for (int i = 0; i < PublicWay.activityList.size(); i++) {
 				if (null != PublicWay.activityList.get(i)) {
@@ -300,7 +292,7 @@ public class MainActivity extends Activity {
 			System.exit(0);
 		}
 		return true;
-	}
+	}*/
 
 	public class ViewHolder {
 		public ImageView image;

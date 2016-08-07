@@ -17,7 +17,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
@@ -26,7 +26,7 @@ import com.yellow.photo.zoom.ViewPagerFixed;
 
 /**
  * 这个是用于进行图片浏览时的界面
- * @version 2014年10月18日 下午11:47:53
+ * @version 2015年10月18日 下午11:47:53
  */
 public class GalleryActivity extends BaseActivty {
 	private Intent intent;

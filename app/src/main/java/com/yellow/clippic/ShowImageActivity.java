@@ -1,6 +1,6 @@
 package com.yellow.clippic;
 
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

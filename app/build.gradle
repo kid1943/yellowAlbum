@@ -7,6 +7,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
+        applicationId "com.yellow.photo.activity"
         minSdkVersion 8
         targetSdkVersion 18
         compileOptions {

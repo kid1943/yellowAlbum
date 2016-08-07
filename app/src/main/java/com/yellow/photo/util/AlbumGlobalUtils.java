@@ -17,7 +17,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

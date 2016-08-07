@@ -1,6 +1,6 @@
 package com.yellow.photo.activity;
 
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.photo.util.AlbumGlobalUtils;
 
 import android.app.Activity;

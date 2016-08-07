@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import com.king.photo.R;
+import com.yellow.photo.activity.R;
 import com.yellow.clippic.view.ClipImageLayout;
 import com.yellow.photo.activity.BaseActivty;
 
