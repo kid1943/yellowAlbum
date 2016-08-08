@@ -138,6 +138,7 @@ public class AlbumActivity extends BaseActivty {
 	// 完成按钮的监听
 	private class AlbumSendListener implements OnClickListener {
 		public void onClick(View v) {
+			Log.i("AlbumActivity","AlbumSendListener.....");
 			overridePendingTransition(R.anim.activity_translate_in,R.anim.activity_translate_out);
 			AlbumGlobalUtils.back2MainActivity(AlbumActivity.this);
 			AlbumActivity.this.finish();
@@ -336,7 +337,7 @@ public class AlbumActivity extends BaseActivty {
 			                       -(selectImgNum- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
 			                       + PublicWay.SURPLUSSELECTIMGNUM + ")");
 							}else{
-								Toast.makeText(AlbumActivity.this, "超出可选张数", 0).show();
+								Toast.makeText(AlbumActivity.this, "超出可选张数", Toast.LENGTH_SHORT).show();
 							}
 							return;
 						}

@@ -59,8 +59,8 @@ public class MainActivity extends Activity {
 		// 入口Activity的全类名
 		AlbumGlobalUtils.MainActivityName = this.getClass().getName();
 		AlbumGlobalUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
-//		Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
-		PublicWay.activityList.add(this);// 添加Activity集合
+		Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
+//		PublicWay.activityList.add(this);// 添加Activity集合
 		parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);
 		setContentView(parentView);
 		init();
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 	 @Override
 	 protected void onStart() {
 		 Log.i("MainActivity", "onStart####");
-//		 adapter.update();
+		 adapter.update();
 		 super.onStart();
 	 }
 
@@ -136,7 +136,6 @@ public class MainActivity extends Activity {
 				} else {
 					ViewHolder vh = (ViewHolder) arg1.getTag();
 					// 吐出路径
-					Toast.makeText(getApplicationContext(), vh.imgPath, Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
 					intent.putExtra("position", "3");
 					intent.putExtra("ID", arg2 - 1);
@@ -168,6 +167,7 @@ public class MainActivity extends Activity {
 		}
 
 		public int getCount() {
+			Log.i("MainActivity", "getCount---"+(AlbumGlobalUtils.totalSelectImgs.size()+1));
 			return (AlbumGlobalUtils.totalSelectImgs.size() + 1);
 		}
 
@@ -213,6 +213,7 @@ public class MainActivity extends Activity {
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
 				case 1:
+					Log.i("MainActivity", "handler--1111");
 					adapter.notifyDataSetChanged();
 					break;
 				}
@@ -259,7 +260,7 @@ public class MainActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-/*		switch (requestCode) {
+		switch (requestCode) {
 		case TAKE_PICTURE:
 			if (AlbumGlobalUtils.totalSelectImgs.size() < 4 && resultCode == RESULT_OK) {
 				String sdPath = null;
@@ -279,10 +280,10 @@ public class MainActivity extends Activity {
 				AlbumGlobalUtils.totalSelectImgs.add(takePhoto);
 			}
 			break;
-		}*/
+		}
 	}
 
-/*	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			for (int i = 0; i < PublicWay.activityList.size(); i++) {
 				if (null != PublicWay.activityList.get(i)) {
@@ -292,7 +293,7 @@ public class MainActivity extends Activity {
 			System.exit(0);
 		}
 		return true;
-	}*/
+	}
 
 	public class ViewHolder {
 		public ImageView image;
