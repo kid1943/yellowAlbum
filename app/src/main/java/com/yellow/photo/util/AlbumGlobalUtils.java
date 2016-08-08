@@ -218,7 +218,7 @@ public class AlbumGlobalUtils {
 		int i = 0;
 		Bitmap bitmap = null;
 		while (true) {
-			if ((options.outWidth >> i <= 2000)&& (options.outHeight >> i <= 2000)) {
+			if ((options.outWidth >> i <= 5000)&& (options.outHeight >> i <= 5000)) {
 				in = new BufferedInputStream(new FileInputStream(new File(path)));
 				options.inSampleSize = (int) Math.pow(2.0D, i);
 				options.inJustDecodeBounds = false;
