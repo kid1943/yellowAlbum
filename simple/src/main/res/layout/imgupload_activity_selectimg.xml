@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/black" >
+        android:background="@color/black">
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,24 +32,31 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
+
+    <Button
+        android:id="@+id/btn_cut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="剪切图片" />
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="100dp"
         android:layout_margin="8dp"
+        android:background="@null"
         android:gravity="left|top"
-        android:hint="说点什么吧..."       
-        android:background="@null" >
-    </EditText>
+        android:hint="说点什么吧..."></EditText>
 
-    <GridView 
+    <GridView
         android:id="@+id/noScrollgridview"
         android:layout_width="fill_parent"
         android:layout_height="350dp"
         android:layout_marginLeft="5dp"
-        android:horizontalSpacing="3dp"        
+        android:horizontalSpacing="3dp"
         android:numColumns="5"
         android:scrollbars="none"
-        android:verticalSpacing="5dp" >
-    </GridView>
+        android:verticalSpacing="5dp"></GridView>
+
+
 
 </LinearLayout>

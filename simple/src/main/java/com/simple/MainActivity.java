@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
    private View parentView;
    private PopupWindow pop = null;
    private LinearLayout ll_popup;
+    private Button btn_cut;
 
    protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
     }
 
    public void init() {
+       btn_cut = (Button) parentView.findViewById(R.id.btn_cut);
        pop = new PopupWindow(MainActivity.this);
      // 弹出选择图片源的popwin
        View view = getLayoutInflater().inflate(R.layout.imgupload_item_popupwindows, null);
@@ -141,6 +143,15 @@ public class MainActivity extends Activity {
                    intent.putExtra("ID", arg2 - 1);
                    startActivity(intent);
                }
+           }
+       });
+
+       btn_cut.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent0 = new Intent(MainActivity.this ,AlbumActivity.class);
+               intent0.putExtra("isPortrait", true);
+              MainActivity.this.startActivity(intent0);
            }
        });
 
@@ -263,6 +274,7 @@ public class MainActivity extends Activity {
        switch (requestCode) {
        case TAKE_PICTURE:
            if (AlbumGlobalUtils.totalSelectImgs.size() < 4 && resultCode == RESULT_OK) {
+               Log.i("MainActivity", "MainActivity----onActivityResult");
                String sdPath = null;
                String fileName = String.valueOf(System.currentTimeMillis());
                Bitmap bm = (Bitmap) data.getExtras().get("data");
@@ -272,8 +284,8 @@ public class MainActivity extends Activity {
                }else{
                    sdPath = Environment.getExternalStorageDirectory() + "/Yellow/";
                }
-               FileUtils.saveBitmap(bm, fileName);
 
+               FileUtils.saveBitmap(bm, fileName);
                ImageItem takePhoto = new ImageItem();
                takePhoto.setImagePath(sdPath+fileName);
                takePhoto.setBitmap(bm);
