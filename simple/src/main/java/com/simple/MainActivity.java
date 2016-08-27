@@ -268,7 +268,10 @@ public class MainActivity extends Activity {
    public void photo() {
        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+
+
    }
+
 
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        switch (requestCode) {
