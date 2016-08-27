@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--the folder of take a pic-->
+  <string name="album_name">yellow</string>
+    <!--the max selected-->
+    <string name="max">8</string>
+</resources>

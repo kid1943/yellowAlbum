@@ -7,6 +7,7 @@ import java.io.IOException;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class FileUtils {
 	
@@ -14,10 +15,8 @@ public class FileUtils {
 			+ "/Photo_LJ/";
 
 	public static void saveBitmap(Bitmap bm, String picName) {
-		
 		if(!TextUtils.isEmpty(AlbumGlobalUtils.takePhotoFolder)){
-			SDPATH = Environment.getExternalStorageDirectory()
-					+ "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
+			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
 		}
 		
 		try {
@@ -28,9 +27,10 @@ public class FileUtils {
 			if (f.exists()) {
 				f.delete();
 			}
-			
+
+			Log.i("FileUtils", "f----"+f.getPath());
 			FileOutputStream out = new FileOutputStream(f);
-			bm.compress(Bitmap.CompressFormat.JPEG, 90, out);
+			bm.compress(Bitmap.CompressFormat.JPEG, 10, out);
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
@@ -91,7 +91,4 @@ public class FileUtils {
 		}
 		return true;
 	}
-	
-
-
 }

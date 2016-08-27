@@ -57,8 +57,8 @@ public class ClipImgActivity extends BaseActivty {
 
 	private void initView() {
 		// 获取屏幕宽高（方法1）
-		int screenWidth = getWindowManager().getDefaultDisplay().getWidth() / 3; // 屏幕宽（像素，如：480px）
-		int screenHeight = getWindowManager().getDefaultDisplay().getHeight() / 3; // 屏幕高（像素，如：800p）
+		int screenWidth = getWindowManager().getDefaultDisplay().getWidth() ; // 屏幕宽（像素，如：480px）
+		int screenHeight = getWindowManager().getDefaultDisplay().getHeight() ; // 屏幕高（像素，如：800p）
 		tv_clip =  (TextView) findViewById(R.id.cancel);
 		tv_clip.setText("使用");
 		back = (TextView) findViewById(R.id.back);
