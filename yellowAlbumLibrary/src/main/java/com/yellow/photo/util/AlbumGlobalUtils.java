@@ -99,9 +99,10 @@ public class AlbumGlobalUtils {
 	 * 调用相册时必须要先初始化
 	 * @param ActivityName
 	 * @param activity
-	 * @param resid 相册头部样式的id
+	 * @param headViewTitleresId 相册头部样式的id
 	 */
 	public static void initUpLoadImg(String ActivityName, Activity activity, int headViewTitleresId) {
+		takePhotoFolder = activity.getResources().getString(R.string.album_name);
 		context = activity;
 		//头部的样式
 		AlbumGlobalUtils.headViewTitleresId = headViewTitleresId;

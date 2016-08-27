@@ -425,11 +425,7 @@ public class AlbumActivity extends BaseActivty {
 			if (AlbumGlobalUtils.totalSelectImgs.size() < PublicWay.SELECTIMGNUM && resultCode == Activity.RESULT_OK) {
 				String fileName = String.valueOf(System.currentTimeMillis());
 				Bitmap bm = (Bitmap) data.getExtras().get("data");
-				if(!TextUtils.isEmpty(AlbumGlobalUtils.takePhotoFolder)){
-					sdPath = Environment.getExternalStorageDirectory()+ "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
-				}else{
-					sdPath = Environment.getExternalStorageDirectory()+ "/Photos/";	
-				}
+				sdPath = Environment.getExternalStorageDirectory()+ "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
 				FileUtils.saveBitmap(bm, fileName);
 				ImageItem takePhoto = new ImageItem();
 				takePhoto.setImagePath(sdPath+fileName+".jpeg");

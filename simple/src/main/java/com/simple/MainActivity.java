@@ -278,13 +278,7 @@ public class MainActivity extends Activity {
                String sdPath = null;
                String fileName = String.valueOf(System.currentTimeMillis());
                Bitmap bm = (Bitmap) data.getExtras().get("data");
-
-               if(!TextUtils.isEmpty(AlbumGlobalUtils.takePhotoFolder)){
-                   sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
-               }else{
-                   sdPath = Environment.getExternalStorageDirectory() + "/Yellow/";
-               }
-
+               sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
                FileUtils.saveBitmap(bm, fileName);
                ImageItem takePhoto = new ImageItem();
                takePhoto.setImagePath(sdPath+fileName);

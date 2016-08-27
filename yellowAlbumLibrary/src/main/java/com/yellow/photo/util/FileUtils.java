@@ -11,14 +11,10 @@ import android.util.Log;
 
 public class FileUtils {
 	
-	public static String SDPATH = Environment.getExternalStorageDirectory()
-			+ "/Photo_LJ/";
+	public static String SDPATH = "";
 
 	public static void saveBitmap(Bitmap bm, String picName) {
-		if(!TextUtils.isEmpty(AlbumGlobalUtils.takePhotoFolder)){
 			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
-		}
-		
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");

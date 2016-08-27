@@ -1,5 +1,5 @@
-//apply plugin: 'com.android.library'
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
 //dddd  dddddd
 
 android {
@@ -7,7 +7,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.yellow.photo.activity"
+//        applicationId "com.yellow.photo.activity"
         minSdkVersion 8
         targetSdkVersion 18
         compileOptions {
