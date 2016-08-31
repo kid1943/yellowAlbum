@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--the folder of take a pic-->
-  <string name="album_name">yellow</string>
+    <string name="album_name">yellow</string>
     <!--the max selected-->
     <string name="max">8</string>
+    <!--is show cammera selection  1 show  0 not show-->
+    <string name="isShow_camera_selection">1</string>
 </resources>

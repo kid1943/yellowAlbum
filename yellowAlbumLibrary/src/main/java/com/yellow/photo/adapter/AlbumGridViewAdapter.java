@@ -124,7 +124,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 					@Override
 					public void onClick(View v) {
 						if(AlbumGlobalUtils.totalSelectImgs.size() >= PublicWay.SELECTIMGNUM){
-			                Toast.makeText(mContext, "超出可选张数", 0).show();
+			                Toast.makeText(mContext, "超出可选张数", Toast.LENGTH_SHORT).show();
 		                    return;   
 						}
 						Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -179,15 +179,15 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 			} 
 					
 			try {
-				if (tempSelectDataList.contains(dataList.get(position-1))) {
-					if (tempSelectDataList.contains(dataList.get(position))) {
+//				if (tempSelectDataList.contains(dataList.get(position-1))) {
+					if (tempSelectDataList.contains(dataList.get(position-1))) {
 					viewHolder.toggleButton.setChecked(true);
 					viewHolder.choosetoggle.setChecked(true);
 				} else {
 					viewHolder.toggleButton.setChecked(false);
 					viewHolder.choosetoggle.setChecked(false);
 				}
-			    }
+//			    }
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 	
