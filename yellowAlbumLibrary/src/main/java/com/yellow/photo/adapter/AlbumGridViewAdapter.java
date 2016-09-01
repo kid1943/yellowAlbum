@@ -131,6 +131,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 						((Activity) mContext).startActivityForResult(openCameraIntent, TAKE_PICTURE);			
 					}
 				});
+
 				rl_camera.setTag(viewHolder);
 				return rl_camera;
 			}
