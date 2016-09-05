@@ -7,4 +7,4 @@ from now it will be completed
 
 一个浏览图片的相册 
 
-
+https://github.com/kid1943/yellowAlbum/blob/master/album.gif?raw=true
