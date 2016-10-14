@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -41,6 +42,8 @@ import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 
+import java.io.File;
+
 /**
  *测试界面
  * Created by yellow on 14:59  2016/5/28.onKeyDown
@@ -57,6 +60,8 @@ public class MainActivity extends Activity {
    protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        Log.i("MainActivity", "onCreate####");
+       makeDir();
+
        // 入口Activity的全类名
        AlbumGlobalUtils.MainActivityName = this.getClass().getName();
        AlbumGlobalUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
@@ -78,6 +83,7 @@ public class MainActivity extends Activity {
    public void init() {
        btn_cut = (Button) parentView.findViewById(R.id.btn_cut);
        pop = new PopupWindow(MainActivity.this);
+       pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
      // 弹出选择图片源的popwin
        View view = getLayoutInflater().inflate(R.layout.imgupload_item_popupwindows, null);
        ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);// popwin主布局
@@ -308,5 +314,17 @@ public class MainActivity extends Activity {
        public ImageView image;
        public String imgPath;
    }
+
+    private void makeDir(){
+        String dir = Environment.getExternalStorageDirectory().getPath() + File.separator+"luhe" ;
+        File dirFile = new File(dir);
+        Log.i("MainActivity", "dir--" + dir);
+        if(!dirFile.exists()){
+            boolean b  = dirFile.mkdir();
+            Log.i("MainActivity", "makeDir--b--"+b);
+        }
+    }
+
+
 
 }
