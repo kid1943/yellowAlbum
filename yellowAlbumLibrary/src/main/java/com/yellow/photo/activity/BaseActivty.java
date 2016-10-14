@@ -1,8 +1,6 @@
 package com.yellow.photo.activity;
 
-import com.yellow.photo.activity.R;
 import com.yellow.photo.util.AlbumGlobalUtils;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
@@ -21,8 +19,7 @@ public class BaseActivty extends Activity {
 	private void initBaseView() {
 		headview = (RelativeLayout) findViewById(R.id.headview);
 		if (AlbumGlobalUtils.headViewTitleresId != 0) {
-			headview.setBackground(this.getResources().getDrawable(
-					AlbumGlobalUtils.headViewTitleresId));
+			headview.setBackground(this.getResources().getDrawable(AlbumGlobalUtils.headViewTitleresId));
 		}
 	}
 }
