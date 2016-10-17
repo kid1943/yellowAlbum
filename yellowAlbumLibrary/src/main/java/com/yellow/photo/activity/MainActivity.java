@@ -14,7 +14,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -33,8 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-import com.yellow.photo.activity.R;
+
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
@@ -167,8 +165,8 @@ public class MainActivity extends Activity {
 		}
 
 		public int getCount() {
-			Log.i("MainActivity", "getCount---"+(AlbumGlobalUtils.totalSelectImgs.size()+1));
-			return (AlbumGlobalUtils.totalSelectImgs.size() + 1);
+			Log.i("MainActivity", "getCount---"+(AlbumGlobalUtils.totalSelImgs.size()+1));
+			return (AlbumGlobalUtils.totalSelImgs.size() + 1);
 		}
 
 		public Object getItem(int arg0) {
@@ -201,8 +199,8 @@ public class MainActivity extends Activity {
 			if (position == 0) {
 				holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused));
 			} else {
-				holder.image.setImageBitmap(AlbumGlobalUtils.totalSelectImgs.get(position - 1).getBitmap());
-				holder.imgPath = AlbumGlobalUtils.totalSelectImgs.get(position - 1).imagePath;
+				holder.image.setImageBitmap(AlbumGlobalUtils.totalSelImgs.get(position - 1).getBitmap());
+				holder.imgPath = AlbumGlobalUtils.totalSelImgs.get(position - 1).imagePath;
 				// 在这里设置图片的路径
 				// tempSelectBitmap图片集合不包括"加"图片
 			}
@@ -222,11 +220,11 @@ public class MainActivity extends Activity {
 		};
 
 		public void loading() {
-						if (AlbumGlobalUtils.max == AlbumGlobalUtils.totalSelectImgs.size()) {
+						if (AlbumGlobalUtils.max == AlbumGlobalUtils.totalSelImgs.size()) {
 							Message message = new Message();
 							message.what = 1;
 							handler.sendMessage(message);
-						} else if (AlbumGlobalUtils.max < AlbumGlobalUtils.totalSelectImgs.size()) {
+						} else if (AlbumGlobalUtils.max < AlbumGlobalUtils.totalSelImgs.size()) {
 							AlbumGlobalUtils.max += 1;
 							Message message = new Message();
 							message.what = 1;
@@ -262,7 +260,7 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case TAKE_PICTURE:
-			if (AlbumGlobalUtils.totalSelectImgs.size() < 4 && resultCode == RESULT_OK) {
+			if (AlbumGlobalUtils.totalSelImgs.size() < 4 && resultCode == RESULT_OK) {
 				String sdPath = null;
 				String fileName = String.valueOf(System.currentTimeMillis());
 				Bitmap bm = (Bitmap) data.getExtras().get("data");
@@ -272,7 +270,7 @@ public class MainActivity extends Activity {
 				ImageItem takePhoto = new ImageItem();
 				takePhoto.setImagePath(sdPath+fileName);
 				takePhoto.setBitmap(bm);
-				AlbumGlobalUtils.totalSelectImgs.add(takePhoto);
+				AlbumGlobalUtils.totalSelImgs.add(takePhoto);
 			}
 			break;
 		}

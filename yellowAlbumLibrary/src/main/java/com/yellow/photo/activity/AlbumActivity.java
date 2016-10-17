@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,9 +45,6 @@ import com.yellow.photo.util.PublicWay;
  * 这个是进入相册显示所有图片的界面
  */
 public class AlbumActivity extends BaseActivty {
-
-    private MenuItem menuitem;//toolbar的菜单按钮
-
 
     // 显示手机里的所有图片的列表控件
     private GridView gridView;
@@ -83,20 +79,15 @@ public class AlbumActivity extends BaseActivty {
     //本次进入相册一共选中的图片
     private int tempSelectImgs = 0;
 
-
-    private MyToolBar toolbar;
-
-
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.imgupload_plugin_camera_album);
+        isPortrait = getIntent().getBooleanExtra("isPortrait", false);// 判断是否选择裁剪图片
         super.onCreate(savedInstanceState);
-        // 判断是否选择裁剪图片 相册有浏览和剪裁图片的两种
-        isPortrait = getIntent().getBooleanExtra("isPortrait", false);
         // 初始化要选择的图片数目
         selectImgNum = getIntent().getIntExtra("selecnum", 3);
         PublicWay.SELECTIMGNUM = selectImgNum;
         PublicWay.activityList.add(this);
-        PublicWay.SURPLUSSELECTIMGNUM = PublicWay.SELECTIMGNUM - AlbumGlobalUtils.totalSelectImgs.size();
+        PublicWay.SURPLUS_SEL_NUM = PublicWay.SELECTIMGNUM - AlbumGlobalUtils.totalSelImgs.size();
         // 注册一个广播，这个广播主要是用于在GalleryActivity进行预览时，防止当所有图片都删除完后，再回到该页面时被取消选中的图片仍处于选中状态
         IntentFilter filter = new IntentFilter("data.broadcast.action");
         registerReceiver(broadcastReceiver, filter);
@@ -154,7 +145,7 @@ public class AlbumActivity extends BaseActivty {
      * Created by yellow on 17:05  2016/10/14.
      */
     private void backHandle() {
-        int total = AlbumGlobalUtils.totalSelectImgs.size();
+        int total = AlbumGlobalUtils.totalSelImgs.size();
         int removeIndex = 0;
         if (total > 0 && tempSelectImgs > 0) {
             removeIndex = total - tempSelectImgs;
@@ -163,7 +154,7 @@ public class AlbumActivity extends BaseActivty {
         for (int i = removeIndex; i < total; i++) {
             try {
                 Log.i("AlbumActivity", "AlbumActivity--index--" + i);
-                AlbumGlobalUtils.totalSelectImgs.remove(AlbumGlobalUtils.totalSelectImgs.size() - 1);
+                AlbumGlobalUtils.totalSelImgs.remove(AlbumGlobalUtils.totalSelImgs.size() - 1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -176,16 +167,16 @@ public class AlbumActivity extends BaseActivty {
     private class CancelListener implements OnClickListener {
         public void onClick(View v) {
             // 去掉选择的图片上的钩子
-            if (AlbumGlobalUtils.totalSelectImgs.size() == 0) {
+            if (AlbumGlobalUtils.totalSelImgs.size() == 0) {
                 AlbumActivity.this.finish();
                 return;
             }
-            AlbumGlobalUtils.totalSelectImgs.clear();
+            AlbumGlobalUtils.totalSelImgs.clear();
             gridImageAdapter.notifyDataSetChanged();
             tv_folders.setText(AlbumActivity.this.getResources().getString(R.string.finish) + "("
-                    + (PublicWay.SURPLUSSELECTIMGNUM
-                    - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                    + PublicWay.SURPLUSSELECTIMGNUM + ")");
+                    + (PublicWay.SURPLUS_SEL_NUM
+                    - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                    + PublicWay.SURPLUS_SEL_NUM + ")");
         }
     }
 
@@ -214,26 +205,23 @@ public class AlbumActivity extends BaseActivty {
 
         rl_bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
         if (isPortrait) {
-            AlbumGlobalUtils.totalSelectImgs.clear();
+            AlbumGlobalUtils.totalSelImgs.clear();
             rl_bottom_layout.setVisibility(View.GONE);
         }
-
-        toolbar = (MyToolBar) findViewById(R.id.toolbar);
-        initToolBar();
         bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
         preview = (TextView) findViewById(R.id.preview);
         preview.setOnClickListener(new PreviewListener());
         intent = getIntent();
         gridView = (GridView) findViewById(R.id.myGrid);
-        gridImageAdapter = new AlbumGridViewAdapter(this, dataList, AlbumGlobalUtils.totalSelectImgs);
+        gridImageAdapter = new AlbumGridViewAdapter(this, dataList, AlbumGlobalUtils.totalSelImgs);
         gridView.setAdapter(gridImageAdapter);
         tv = (TextView) findViewById(R.id.myText);
         gridView.setEmptyView(tv);
         tv_folders = (TextView) findViewById(R.id.ok_button);
-        menuitem.setTitle(this.getResources().getString(R.string.finish) + "("
-                + (PublicWay.SURPLUSSELECTIMGNUM
-                - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                + PublicWay.SURPLUSSELECTIMGNUM + ")");
+        menuitem.setTitle("完成" + "("
+                + (PublicWay.SURPLUS_SEL_NUM
+                - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                + PublicWay.SURPLUS_SEL_NUM + ")");
 
         boolean pauseOnScroll = true; // or true
         boolean pauseOnFling = true; // or false
@@ -241,15 +229,10 @@ public class AlbumActivity extends BaseActivty {
         gridView.setOnScrollListener(listener);
     }
 
-    /**
-     * 初始化toolbar
-     * Created by yellow on 16:30  2016/10/14.
-     */
+    @Override
     protected void initToolBar() {
-
-        toolbar.setNavigationIcon(R.drawable.back_arrow);
+        super.initToolBar();
         toolbar.setTitle("相册");
-        toolbar.inflateMenu(R.menu.complete_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -258,11 +241,12 @@ public class AlbumActivity extends BaseActivty {
             }
         });
 
-        menuitem = toolbar.getMenu().getItem(0);
         if (isPortrait) {
+            toolbar.setTitle("剪切图片");
             menuitem.setVisible(false);
             menuitem.setEnabled(false);
         }
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -345,25 +329,24 @@ public class AlbumActivity extends BaseActivty {
                     public void onItemClick(final ToggleButton toggleButton,
                                             int position, boolean isChecked, ToggleButton chooseBt) {
                         synchronized (this) {
-                            if (AlbumGlobalUtils.totalSelectImgs.size() >= PublicWay.SELECTIMGNUM) {
+                            if (AlbumGlobalUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM) {
                                 toggleButton.setChecked(false);
                                 boolean isCheck = chooseBt.isChecked();
                                 if (isCheck) {
                                     chooseBt.setChecked(false);
                                     if (folderImgList == null) {
                                         tempSelectImgs--;
-                                        AlbumGlobalUtils.totalSelectImgs.remove(dataList.get(position));
+                                        AlbumGlobalUtils.totalSelImgs.remove(dataList.get(position));
                                         gridImageAdapter.tempSelectDataList.remove(dataList.get(position));
                                     } else {
                                         tempSelectImgs--;
-                                        AlbumGlobalUtils.totalSelectImgs.remove(folderImgList.get(position));
+                                        AlbumGlobalUtils.totalSelImgs.remove(folderImgList.get(position));
                                         gridImageAdapter.tempSelectDataList.remove(folderImgList.get(position));
                                     }
-                                    menuitem.setTitle(AlbumActivity.this.getResources()
-                                            .getString(R.string.finish) + "("
-                                            + (PublicWay.SURPLUSSELECTIMGNUM
-                                            - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                                            + PublicWay.SURPLUSSELECTIMGNUM + ")");
+                                    menuitem.setTitle("完成" + "("
+                                            + (PublicWay.SURPLUS_SEL_NUM
+                                            - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                                            + PublicWay.SURPLUS_SEL_NUM + ")");
                                 } else {
                                     Toast.makeText(AlbumActivity.this, "超出可选张数", Toast.LENGTH_SHORT).show();
                                 }
@@ -373,35 +356,33 @@ public class AlbumActivity extends BaseActivty {
                                 chooseBt.setChecked(true);
                                 if (folderImgList == null) {
                                     tempSelectImgs++;
-                                    AlbumGlobalUtils.totalSelectImgs.add(dataList.get(position));
+                                    AlbumGlobalUtils.totalSelImgs.add(dataList.get(position));
                                     gridImageAdapter.tempSelectDataList.add(dataList.get(position));
                                 } else {
                                     tempSelectImgs++;
-                                    AlbumGlobalUtils.totalSelectImgs.add(folderImgList.get(position));
+                                    AlbumGlobalUtils.totalSelImgs.add(folderImgList.get(position));
                                     gridImageAdapter.tempSelectDataList.add(folderImgList.get(position));
                                 }
 
-                                menuitem.setTitle(AlbumActivity.this.getResources()
-                                        .getString(R.string.finish) + "("
-                                        + (PublicWay.SURPLUSSELECTIMGNUM
-                                        - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                                        + PublicWay.SURPLUSSELECTIMGNUM + ")");
+                                menuitem.setTitle("完成" + "("
+                                        + (PublicWay.SURPLUS_SEL_NUM
+                                        - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                                        + PublicWay.SURPLUS_SEL_NUM + ")");
                             } else {
                                 if (folderImgList == null) {
                                     tempSelectImgs--;
-                                    AlbumGlobalUtils.totalSelectImgs.remove(dataList.get(position));
+                                    AlbumGlobalUtils.totalSelImgs.remove(dataList.get(position));
                                     gridImageAdapter.tempSelectDataList.remove(dataList.get(position));
                                 } else {
                                     tempSelectImgs--;
-                                    AlbumGlobalUtils.totalSelectImgs.remove(folderImgList.get(position));
+                                    AlbumGlobalUtils.totalSelImgs.remove(folderImgList.get(position));
                                     gridImageAdapter.tempSelectDataList.remove(folderImgList.get(position));
                                 }
                                 chooseBt.setChecked(false);
-                                menuitem.setTitle(AlbumActivity.this.getResources()
-                                        .getString(R.string.finish) + "("
-                                        + (PublicWay.SURPLUSSELECTIMGNUM
-                                        - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                                        + PublicWay.SURPLUSSELECTIMGNUM + ")");
+                                menuitem.setTitle("完成" + "("
+                                        + (PublicWay.SURPLUS_SEL_NUM
+                                        - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                                        + PublicWay.SURPLUS_SEL_NUM + ")");
                             }
                             isShowOkBt();
                         }
@@ -411,11 +392,10 @@ public class AlbumActivity extends BaseActivty {
     }
 
     public void isShowOkBt() {
-        menuitem.setTitle(AlbumActivity.this.getResources()
-                .getString(R.string.finish) + "("
-                + (PublicWay.SURPLUSSELECTIMGNUM
-                - (selectImgNum - AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-                + PublicWay.SURPLUSSELECTIMGNUM + ")");
+        menuitem.setTitle("完成" + "("
+                + (PublicWay.SURPLUS_SEL_NUM
+                - (selectImgNum - AlbumGlobalUtils.totalSelImgs.size())) + "/"
+                + PublicWay.SURPLUS_SEL_NUM + ")");
 
         preview.setPressed(true);
         tv_folders.setPressed(true);
@@ -433,7 +413,7 @@ public class AlbumActivity extends BaseActivty {
             case TAKE_PICTURE:
                 String sdPath = null;
                 Log.e("TAKE_PICTURE", "TAKE_PICTURE-----");
-                if (AlbumGlobalUtils.totalSelectImgs.size() < PublicWay.SELECTIMGNUM && resultCode == Activity.RESULT_OK) {
+                if (AlbumGlobalUtils.totalSelImgs.size() < PublicWay.SELECTIMGNUM && resultCode == Activity.RESULT_OK) {
                     String fileName = String.valueOf(System.currentTimeMillis());
                     Bitmap bm = (Bitmap) data.getExtras().get("data");
                     sdPath = Environment.getExternalStorageDirectory() + "/" + AlbumGlobalUtils.takePhotoFolder + "/";
@@ -441,14 +421,14 @@ public class AlbumActivity extends BaseActivty {
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setImagePath(sdPath + fileName + ".jpeg");
                     takePhoto.setBitmap(bm);
-                    AlbumGlobalUtils.totalSelectImgs.add(takePhoto);
+                    AlbumGlobalUtils.totalSelImgs.add(takePhoto);
 
                     if (isPortrait) {
-                        String path = AlbumGlobalUtils.totalSelectImgs.get(0).getImagePath();
+                        String path = AlbumGlobalUtils.totalSelImgs.get(0).getImagePath();
                         Intent intent = new Intent(AlbumActivity.this, ClipImgActivity.class);
                         intent.putExtra("imgpath", path);
                         startActivityForResult(intent, 0);
-                        AlbumGlobalUtils.totalSelectImgs.clear();
+                        AlbumGlobalUtils.totalSelImgs.clear();
                     } else {
                         AlbumGlobalUtils.back2MainActivity(AlbumActivity.this);
                         AlbumActivity.this.finish();

@@ -17,7 +17,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yellow.photo.activity.R;
+import com.yellow.customview.MyToolBar;
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
@@ -29,6 +29,7 @@ import com.yellow.photo.zoom.ViewPagerFixed;
  * @version 2015年10月18日 下午11:47:53
  */
 public class GalleryActivity extends BaseActivty {
+
 	private Intent intent;
 	// 返回按钮
 	private TextView back_bt;
@@ -47,13 +48,7 @@ public class GalleryActivity extends BaseActivty {
 	private ViewPagerFixed pager;
 	private MyPageAdapter adapter;
 
-	public List<Bitmap> bmp = new ArrayList<Bitmap>();
-	public List<String> drr = new ArrayList<String>();
-	public List<String> del = new ArrayList<String>();
-
 	private Context mContext;
-
-	RelativeLayout photo_relativeLayout;
 	private int tempSelectImgs;//本次在相册中选中的图片数量
 
 	@Override
@@ -75,14 +70,14 @@ public class GalleryActivity extends BaseActivty {
 		pager.setOnPageChangeListener(pageChangeListener);
 		
 		if(activityMark == Const.FROM_ALBUM_ACTIVITY){
-			for (int i = 0; i < AlbumGlobalUtils.totalSelectImgs.size(); i++) {
-				if(i >= 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												AlbumGlobalUtils.totalSelectImgs.size() - tempSelectImgs){
-				   initListViews(AlbumGlobalUtils.totalSelectImgs.get(i).getBitmap());
+			for (int i = 0; i < AlbumGlobalUtils.totalSelImgs.size(); i++) {
+				if(i >= 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												AlbumGlobalUtils.totalSelImgs.size() - tempSelectImgs){
+				   initListViews(AlbumGlobalUtils.totalSelImgs.get(i).getBitmap());
 				}
 			}
 		}else{
-			for (int i = 0; i < AlbumGlobalUtils.totalSelectImgs.size(); i++) {
-				initListViews(AlbumGlobalUtils.totalSelectImgs.get(i).getBitmap());
+			for (int i = 0; i < AlbumGlobalUtils.totalSelImgs.size(); i++) {
+				initListViews(AlbumGlobalUtils.totalSelImgs.get(i).getBitmap());
 			}	
 		}
 		adapter = new MyPageAdapter(listViews);
@@ -125,7 +120,7 @@ public class GalleryActivity extends BaseActivty {
 			if(activityMark == Const.FROM_ALBUM_ACTIVITY){
 				send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+tempSelectImgs+")");
 			}else{
-				send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelectImgs.size()+")");
+				send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelImgs.size()+")");
 			}
 		}
 
@@ -168,18 +163,18 @@ public class GalleryActivity extends BaseActivty {
 
 		public void onClick(View v) {
 			if (listViews.size() == 1) {
-				AlbumGlobalUtils.totalSelectImgs.clear();
+				AlbumGlobalUtils.totalSelImgs.clear();
 				AlbumGlobalUtils.max = 0;
 				if(activityMark == Const.FROM_ALBUM_ACTIVITY){
 					send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+tempSelectImgs+")");
 				}else{
-					send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelectImgs.size()+")");
+					send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelImgs.size()+")");
 				}
 				Intent intent = new Intent("data.broadcast.action");
 				sendBroadcast(intent);
 				finish();
 			} else {
-				AlbumGlobalUtils.totalSelectImgs.remove(location);
+				AlbumGlobalUtils.totalSelImgs.remove(location);
 				AlbumGlobalUtils.max--;
 				pager.removeAllViews();
 				listViews.remove(location);
@@ -187,7 +182,7 @@ public class GalleryActivity extends BaseActivty {
 				if(activityMark == Const.FROM_ALBUM_ACTIVITY){
 					send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+tempSelectImgs+")");
 				}else{
-					send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelectImgs.size()+")");
+					send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelImgs.size()+")");
 				}
 				adapter.notifyDataSetChanged();
 			}
@@ -203,11 +198,11 @@ public class GalleryActivity extends BaseActivty {
 	}
 
 	public void isShowOkBt() {
-		if (AlbumGlobalUtils.totalSelectImgs.size() > 0) {
+		if (AlbumGlobalUtils.totalSelImgs.size() > 0) {
 			if(activityMark == Const.FROM_ALBUM_ACTIVITY){
 				send_bt.setText(Res.getString("finish") +  "(" +(location+1) +"/"+tempSelectImgs+")");
 			}else{
-				send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelectImgs.size()+")");
+				send_bt.setText(Res.getString("finish") + "(" +(location+1) +"/"+ AlbumGlobalUtils.totalSelImgs.size()+")");
 			}
 			send_bt.setPressed(true);
 			send_bt.setClickable(true);

@@ -121,7 +121,7 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 
 	private class PreviewListener implements OnClickListener {
 		public void onClick(View v) {
-			if (AlbumGlobalUtils.totalSelectImgs.size() > 0) {
+			if (AlbumGlobalUtils.totalSelImgs.size() > 0) {
 				intent.putExtra("position", "2");
 				intent.setClass(ShowFolderPhotosActivity.this,
 						GalleryActivity.class);
@@ -146,22 +146,22 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 
 	private class CancelListener implements OnClickListener {// 取消按钮的监听
 		public void onClick(View v) {
-			if (AlbumGlobalUtils.totalSelectImgs.size() == 0) {
+			if (AlbumGlobalUtils.totalSelImgs.size() == 0) {
 				unregisterReceiver(broadcastReceiver);
 				finish();
 				return;
 			}
 			// 清空选择的图片
-			AlbumGlobalUtils.totalSelectImgs.clear();
+			AlbumGlobalUtils.totalSelImgs.clear();
 			gridImageAdapter.notifyDataSetChanged();
 			okButton.setText(Res.getString("finish") + "("
-					+ (PublicWay.SURPLUSSELECTIMGNUM 
-					-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-					+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+					+ (PublicWay.SURPLUS_SEL_NUM
+					-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+					+ PublicWay.SURPLUS_SEL_NUM + ")");
 			okButton.setText(Res.getString("finish") + "("
-					+ (PublicWay.SURPLUSSELECTIMGNUM 
-							-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-							+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+					+ (PublicWay.SURPLUS_SEL_NUM
+							-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+							+ PublicWay.SURPLUS_SEL_NUM + ")");
 		}
 	}
 
@@ -174,7 +174,7 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 		gridView = (GridView) findViewById(Res
 				.getWidgetID("showallphoto_myGrid"));
 		gridImageAdapter = new AlbumGridViewAdapter(this, dataList,
-				AlbumGlobalUtils.totalSelectImgs);
+				AlbumGlobalUtils.totalSelImgs);
 		gridView.setAdapter(gridImageAdapter);
 		rl_showallphoto_bottom_layout = (RelativeLayout) findViewById(Res
 				.getWidgetID("rl_showallphoto_bottom_layout"));
@@ -215,43 +215,43 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 				.setOnItemClickListener(new AlbumGridViewAdapter.OnItemClickListener() {
 					public void onItemClick(final ToggleButton toggleButton,
 							int position, boolean isChecked, ToggleButton button) {
-						if (AlbumGlobalUtils.totalSelectImgs.size() >= PublicWay.SELECTIMGNUM
+						if (AlbumGlobalUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM
 								&& isChecked) {
 							toggleButton.setChecked(false);
 							button.setVisibility(View.GONE);
 							int i = button.getVisibility();
 							if(i == View.VISIBLE){
-								AlbumGlobalUtils.totalSelectImgs
+								AlbumGlobalUtils.totalSelImgs
 								.remove(dataList.get(position));
 							}
 							return;
 						}
 						if (isChecked) {
 							button.setVisibility(View.VISIBLE);
-							AlbumGlobalUtils.totalSelectImgs.add(dataList
+							AlbumGlobalUtils.totalSelImgs.add(dataList
 									.get(position));
 							
 							
 							okButton.setText(Res.getString("finish") + "("
-									+ (PublicWay.SURPLUSSELECTIMGNUM 
-											-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-											+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+									+ (PublicWay.SURPLUS_SEL_NUM
+											-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+											+ PublicWay.SURPLUS_SEL_NUM + ")");
 							header_meanu_right_btn.setText(Res.getString("finish") + "("
-									+ (PublicWay.SURPLUSSELECTIMGNUM 
-											-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-											+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+									+ (PublicWay.SURPLUS_SEL_NUM
+											-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+											+ PublicWay.SURPLUS_SEL_NUM + ")");
 						} else {
 							button.setVisibility(View.GONE);
-							AlbumGlobalUtils.totalSelectImgs.remove(dataList
+							AlbumGlobalUtils.totalSelImgs.remove(dataList
 									.get(position));
 							okButton.setText(Res.getString("finish") + "("
-									+ (PublicWay.SURPLUSSELECTIMGNUM 
-											-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-											+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+									+ (PublicWay.SURPLUS_SEL_NUM
+											-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+											+ PublicWay.SURPLUS_SEL_NUM + ")");
 							header_meanu_right_btn.setText(Res.getString("finish") + "("
-									+ (PublicWay.SURPLUSSELECTIMGNUM 
-											-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-											+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+									+ (PublicWay.SURPLUS_SEL_NUM
+											-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+											+ PublicWay.SURPLUS_SEL_NUM + ")");
 						}
 						isShowOkBt();
 					}
@@ -279,9 +279,9 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 	public void isShowOkBt() {
 		if (!AlbumActivity.isPortrait) {
 			okButton.setText(Res.getString("finish") + "("
-					+ (PublicWay.SURPLUSSELECTIMGNUM 
-					-(8- AlbumGlobalUtils.totalSelectImgs.size())) + "/"
-					+ PublicWay.SURPLUSSELECTIMGNUM + ")");
+					+ (PublicWay.SURPLUS_SEL_NUM
+					-(8- AlbumGlobalUtils.totalSelImgs.size())) + "/"
+					+ PublicWay.SURPLUS_SEL_NUM + ")");
 			preview.setPressed(true);
 			okButton.setPressed(true);
 			preview.setClickable(true);
