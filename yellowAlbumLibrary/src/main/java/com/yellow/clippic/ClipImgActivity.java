@@ -11,8 +11,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,12 +22,10 @@ import com.yellow.clippic.view.ClipImageLayout;
 import com.yellow.photo.activity.BaseActivty;
 
 public class ClipImgActivity extends BaseActivty {
+
 	private ClipImageLayout mClipImageLayout;
 	private String imgpath;
-	private TextView tv_clip;
-	private Drawable drawable;
 	private Bitmap bitmap4Clip;
-	private TextView back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,37 +33,34 @@ public class ClipImgActivity extends BaseActivty {
 		super.onCreate(savedInstanceState);
 		imgpath = getIntent().getStringExtra("imgpath");
 		initView();
-		initListener();
 	}
 
-	private void initListener() {
-		back.setOnClickListener(new OnClickListener() {
-			
+	@Override
+	protected void initToolBar() {
+		super.initToolBar();
+		toolbar.setTitle("剪切图片");
+		menuitem.setTitle("剪切");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 			@Override
-			public void onClick(View v) {
-				ClipImgActivity.this.finish();		
+			public boolean onMenuItemClick(MenuItem item) {
+				clipImg();
+				return true;
 			}
 		});
-		
-		tv_clip.setOnClickListener(new OnClickListener() {
+
+		toolbar.setNavigationOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				clipImg();
+				ClipImgActivity.this.finish();
 			}
 		});
 	}
 
 	private void initView() {
+		mClipImageLayout = (ClipImageLayout) findViewById(R.id.id_clipImageLayout);
 		// 获取屏幕宽高（方法1）
 		int screenWidth = getWindowManager().getDefaultDisplay().getWidth() ; // 屏幕宽（像素，如：480px）
 		int screenHeight = getWindowManager().getDefaultDisplay().getHeight() ; // 屏幕高（像素，如：800p）
-		tv_clip =  (TextView) findViewById(R.id.cancel);
-		tv_clip.setText("使用");
-		back = (TextView) findViewById(R.id.back);
-		
-		mClipImageLayout = (ClipImageLayout) findViewById(R.id.id_clipImageLayout);
-
-		// drawable = Drawable.createFromPath(imgpath);
 		BitmapFactory.Options option = new Options();
 		option.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(imgpath, option);// 有用的
@@ -75,7 +70,6 @@ public class ClipImgActivity extends BaseActivty {
 		bitmap4Clip = BitmapFactory.decodeFile(imgpath, option);
 		Log.i("ClipImgActivity  ", "被剪切图片的大少---" + bitmap4Clip.getByteCount()/ 1024 + "kb");
 		mClipImageLayout.mZoomImageView.setImageBitmap(bitmap4Clip);
-		// mClipImageLayout.mZoomImageView.setImageDrawable(drawable);
 	}
 
 	private int calculateInSampleSize(Options option, int reqWidth,
@@ -94,14 +88,12 @@ public class ClipImgActivity extends BaseActivty {
 	}
 
 	private void clipImg() {
-
 		Bitmap bitmap = mClipImageLayout.clip();
 		bitmap4Clip.recycle();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
 		byte[] datas = baos.toByteArray();
-		File file = new File(this.getExternalCacheDir().toString()
-				+ "/potrait.jpeg");
+		File file = new File(this.getExternalCacheDir().toString() + "/potrait.jpeg");
 		try {
 			if (!file.exists()) {
 				file.createNewFile();

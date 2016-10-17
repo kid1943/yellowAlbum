@@ -1,8 +1,6 @@
 package com.yellow.photo.activity;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,16 +9,12 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.yellow.customview.MyToolBar;
 import com.yellow.photo.util.AlbumGlobalUtils;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
@@ -29,20 +23,13 @@ import com.yellow.photo.zoom.ViewPagerFixed;
 
 /**
  * 这个是用于进行图片浏览时的界面
- *
  * @version 2015年10月18日 下午11:47:53
  */
 public class GalleryActivity extends BaseActivty {
 
     private Intent intent;
-    // 返回按钮
-    private TextView back_bt;
     // 发送按钮
     private TextView send_bt;
-    // 删除按钮
-    private TextView tv_del;
-    // 顶部显示预览图片位置的textview
-    private TextView positionTextView;
     // 获取前一个activity传过来的标记
     private int activityMark = 0;
     // 当前的位置
@@ -65,9 +52,7 @@ public class GalleryActivity extends BaseActivty {
         initData();
         initView();
 
-        back_bt.setOnClickListener(new BackListener());
         send_bt.setOnClickListener(new GallerySendListener());
-        tv_del.setOnClickListener(new DelListener());
 
         // 为发送按钮设置文字
         pager = (ViewPagerFixed) findViewById(Res.getWidgetID("gallery01"));
@@ -101,16 +86,6 @@ public class GalleryActivity extends BaseActivty {
     }
 
     private void initView() {
-        tv_del = (TextView) findViewById(R.id.cancel);
-        if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
-            tv_del.setVisibility(View.INVISIBLE);
-        } else {
-            tv_del.setText("删除");
-        }
-        back_bt = (TextView) findViewById(R.id.back);
-        if (activityMark == 0) {
-            back_bt.setText("");
-        }
         send_bt = (TextView) findViewById(Res.getWidgetID("send_button"));
         isShowOkBt();
     }
@@ -144,21 +119,6 @@ public class GalleryActivity extends BaseActivty {
         img.setImageBitmap(bm);
         img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         listViews.add(img);
-    }
-
-    // 返回按钮添加的监听器
-    private class BackListener implements OnClickListener {
-        public void onClick(View v) {
-            back();
-        }
-    }
-
-
-    // 删除按钮添加的监听器
-    private class DelListener implements OnClickListener {
-        public void onClick(View v) {
-            delPic();
-        }
     }
 
     // 完成按钮的监听
@@ -220,7 +180,12 @@ public class GalleryActivity extends BaseActivty {
     protected void initToolBar() {
         super.initToolBar();
         toolbar.setTitle("图片预览");
-        menuitem.setTitle("删除");
+        if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
+            menuitem.setTitle("");
+            menuitem.setEnabled(false);
+        } else {
+            menuitem.setTitle("删除");
+        }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
