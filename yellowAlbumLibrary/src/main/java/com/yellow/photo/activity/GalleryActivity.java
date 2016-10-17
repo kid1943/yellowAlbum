@@ -59,14 +59,14 @@ public class GalleryActivity extends BaseActivty {
         pager.setOnPageChangeListener(pageChangeListener);
 
         if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
-            for (int i = 0; i < AlbumUtils.totalSelImgs.size(); i++) {
-                if (i >= AlbumUtils.totalSelImgs.size() - tempSelectImgs) {
-                    initListViews(AlbumUtils.totalSelImgs.get(i).getBitmap());
+            for (int i = 0; i < AlbumUtils.selImgList.size(); i++) {
+                if (i >= AlbumUtils.selImgList.size() - tempSelectImgs) {
+                    initListViews(AlbumUtils.selImgList.get(i).getBitmap());
                 }
             }
         } else {
-            for (int i = 0; i < AlbumUtils.totalSelImgs.size(); i++) {
-                initListViews(AlbumUtils.totalSelImgs.get(i).getBitmap());
+            for (int i = 0; i < AlbumUtils.selImgList.size(); i++) {
+                initListViews(AlbumUtils.selImgList.get(i).getBitmap());
             }
         }
         adapter = new MyPageAdapter(listViews);
@@ -97,7 +97,7 @@ public class GalleryActivity extends BaseActivty {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
             }
         }
 
@@ -129,11 +129,11 @@ public class GalleryActivity extends BaseActivty {
     }
 
     public void isShowOkBt() {
-        if (AlbumUtils.totalSelImgs.size() > 0) {
+        if (AlbumUtils.selImgList.size() > 0) {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
             }
             send_bt.setPressed(true);
             send_bt.setClickable(true);
@@ -221,18 +221,18 @@ public class GalleryActivity extends BaseActivty {
      */
     private void delPic() {
         if (listViews.size() == 1) {
-            AlbumUtils.totalSelImgs.clear();
+            AlbumUtils.selImgList.clear();
             AlbumUtils.max = 0;
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
             }
             Intent intent = new Intent("data.broadcast.action");
             sendBroadcast(intent);
             finish();
         } else {
-            AlbumUtils.totalSelImgs.remove(location);
+            AlbumUtils.selImgList.remove(location);
             AlbumUtils.max--;
             pager.removeAllViews();
             listViews.remove(location);
@@ -240,7 +240,7 @@ public class GalleryActivity extends BaseActivty {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
             }
             adapter.notifyDataSetChanged();
         }

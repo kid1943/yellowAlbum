@@ -121,7 +121,7 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 
 	private class PreviewListener implements OnClickListener {
 		public void onClick(View v) {
-			if (AlbumUtils.totalSelImgs.size() > 0) {
+			if (AlbumUtils.selImgList.size() > 0) {
 				intent.putExtra("position", "2");
 				intent.setClass(ShowFolderPhotosActivity.this,
 						GalleryActivity.class);
@@ -146,21 +146,21 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 
 	private class CancelListener implements OnClickListener {// 取消按钮的监听
 		public void onClick(View v) {
-			if (AlbumUtils.totalSelImgs.size() == 0) {
+			if (AlbumUtils.selImgList.size() == 0) {
 				unregisterReceiver(broadcastReceiver);
 				finish();
 				return;
 			}
 			// 清空选择的图片
-			AlbumUtils.totalSelImgs.clear();
+			AlbumUtils.selImgList.clear();
 			gridImageAdapter.notifyDataSetChanged();
 			okButton.setText(Res.getString("finish") + "("
 					+ (PublicWay.SURPLUS_SEL_NUM
-					-(8- AlbumUtils.totalSelImgs.size())) + "/"
+					-(8- AlbumUtils.selImgList.size())) + "/"
 					+ PublicWay.SURPLUS_SEL_NUM + ")");
 			okButton.setText(Res.getString("finish") + "("
 					+ (PublicWay.SURPLUS_SEL_NUM
-							-(8- AlbumUtils.totalSelImgs.size())) + "/"
+							-(8- AlbumUtils.selImgList.size())) + "/"
 							+ PublicWay.SURPLUS_SEL_NUM + ")");
 		}
 	}
@@ -174,7 +174,7 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 		gridView = (GridView) findViewById(Res
 				.getWidgetID("showallphoto_myGrid"));
 		gridImageAdapter = new AlbumGridViewAdapter(this, dataList,
-				AlbumUtils.totalSelImgs);
+				AlbumUtils.selImgList);
 		gridView.setAdapter(gridImageAdapter);
 		rl_showallphoto_bottom_layout = (RelativeLayout) findViewById(Res
 				.getWidgetID("rl_showallphoto_bottom_layout"));
@@ -215,42 +215,42 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 				.setOnItemClickListener(new AlbumGridViewAdapter.OnItemClickListener() {
 					public void onItemClick(final ToggleButton toggleButton,
 							int position, boolean isChecked, ToggleButton button) {
-						if (AlbumUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM
+						if (AlbumUtils.selImgList.size() >= PublicWay.SELECTIMGNUM
 								&& isChecked) {
 							toggleButton.setChecked(false);
 							button.setVisibility(View.GONE);
 							int i = button.getVisibility();
 							if(i == View.VISIBLE){
-								AlbumUtils.totalSelImgs
+								AlbumUtils.selImgList
 								.remove(dataList.get(position));
 							}
 							return;
 						}
 						if (isChecked) {
 							button.setVisibility(View.VISIBLE);
-							AlbumUtils.totalSelImgs.add(dataList
+							AlbumUtils.selImgList.add(dataList
 									.get(position));
 							
 							
 							okButton.setText(Res.getString("finish") + "("
 									+ (PublicWay.SURPLUS_SEL_NUM
-											-(8- AlbumUtils.totalSelImgs.size())) + "/"
+											-(8- AlbumUtils.selImgList.size())) + "/"
 											+ PublicWay.SURPLUS_SEL_NUM + ")");
 							header_meanu_right_btn.setText(Res.getString("finish") + "("
 									+ (PublicWay.SURPLUS_SEL_NUM
-											-(8- AlbumUtils.totalSelImgs.size())) + "/"
+											-(8- AlbumUtils.selImgList.size())) + "/"
 											+ PublicWay.SURPLUS_SEL_NUM + ")");
 						} else {
 							button.setVisibility(View.GONE);
-							AlbumUtils.totalSelImgs.remove(dataList
+							AlbumUtils.selImgList.remove(dataList
 									.get(position));
 							okButton.setText(Res.getString("finish") + "("
 									+ (PublicWay.SURPLUS_SEL_NUM
-											-(8- AlbumUtils.totalSelImgs.size())) + "/"
+											-(8- AlbumUtils.selImgList.size())) + "/"
 											+ PublicWay.SURPLUS_SEL_NUM + ")");
 							header_meanu_right_btn.setText(Res.getString("finish") + "("
 									+ (PublicWay.SURPLUS_SEL_NUM
-											-(8- AlbumUtils.totalSelImgs.size())) + "/"
+											-(8- AlbumUtils.selImgList.size())) + "/"
 											+ PublicWay.SURPLUS_SEL_NUM + ")");
 						}
 						isShowOkBt();
@@ -280,7 +280,7 @@ public class ShowFolderPhotosActivity extends BaseActivty {
 		if (!AlbumActivity.isPortrait) {
 			okButton.setText(Res.getString("finish") + "("
 					+ (PublicWay.SURPLUS_SEL_NUM
-					-(8- AlbumUtils.totalSelImgs.size())) + "/"
+					-(8- AlbumUtils.selImgList.size())) + "/"
 					+ PublicWay.SURPLUS_SEL_NUM + ")");
 			preview.setPressed(true);
 			okButton.setPressed(true);

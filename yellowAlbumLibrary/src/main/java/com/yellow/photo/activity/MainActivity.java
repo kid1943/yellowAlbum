@@ -165,8 +165,8 @@ public class MainActivity extends Activity {
 		}
 
 		public int getCount() {
-			Log.i("MainActivity", "getCount---"+(AlbumUtils.totalSelImgs.size()+1));
-			return (AlbumUtils.totalSelImgs.size() + 1);
+			Log.i("MainActivity", "getCount---"+(AlbumUtils.selImgList.size()+1));
+			return (AlbumUtils.selImgList.size() + 1);
 		}
 
 		public Object getItem(int arg0) {
@@ -199,8 +199,8 @@ public class MainActivity extends Activity {
 			if (position == 0) {
 				holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused));
 			} else {
-				holder.image.setImageBitmap(AlbumUtils.totalSelImgs.get(position - 1).getBitmap());
-				holder.imgPath = AlbumUtils.totalSelImgs.get(position - 1).imagePath;
+				holder.image.setImageBitmap(AlbumUtils.selImgList.get(position - 1).getBitmap());
+				holder.imgPath = AlbumUtils.selImgList.get(position - 1).imagePath;
 				// 在这里设置图片的路径
 				// tempSelectBitmap图片集合不包括"加"图片
 			}
@@ -220,11 +220,11 @@ public class MainActivity extends Activity {
 		};
 
 		public void loading() {
-						if (AlbumUtils.max == AlbumUtils.totalSelImgs.size()) {
+						if (AlbumUtils.max == AlbumUtils.selImgList.size()) {
 							Message message = new Message();
 							message.what = 1;
 							handler.sendMessage(message);
-						} else if (AlbumUtils.max < AlbumUtils.totalSelImgs.size()) {
+						} else if (AlbumUtils.max < AlbumUtils.selImgList.size()) {
 							AlbumUtils.max += 1;
 							Message message = new Message();
 							message.what = 1;
@@ -260,7 +260,7 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case TAKE_PICTURE:
-			if (AlbumUtils.totalSelImgs.size() < 4 && resultCode == RESULT_OK) {
+			if (AlbumUtils.selImgList.size() < 4 && resultCode == RESULT_OK) {
 				String sdPath = null;
 				String fileName = String.valueOf(System.currentTimeMillis());
 				Bitmap bm = (Bitmap) data.getExtras().get("data");
@@ -270,7 +270,7 @@ public class MainActivity extends Activity {
 				ImageItem takePhoto = new ImageItem();
 				takePhoto.setImagePath(sdPath+fileName);
 				takePhoto.setBitmap(bm);
-				AlbumUtils.totalSelImgs.add(takePhoto);
+				AlbumUtils.selImgList.add(takePhoto);
 			}
 			break;
 		}

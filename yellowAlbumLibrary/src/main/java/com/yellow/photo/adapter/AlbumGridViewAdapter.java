@@ -123,7 +123,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 				rl_camera.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if(AlbumUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM){
+						if(AlbumUtils.selImgList.size() >= PublicWay.SELECTIMGNUM){
 			                Toast.makeText(mContext, "超出可选张数", Toast.LENGTH_SHORT).show();
 		                    return;   
 						}

@@ -33,8 +33,8 @@ public class AlbumUtils {
 	public static Context context;
 	public static Bitmap portrait;
 	public static byte[] portraitBytes;
-	public static ArrayList<ImageItem> totalSelImgs = new ArrayList<ImageItem>(); // 选择的图片的临时列表
-	public static ArrayList<ImageItem> tempSelectImgs = new ArrayList<ImageItem>();
+	public static ArrayList<ImageItem> selImgList = new ArrayList<ImageItem>();
+	public static ArrayList<ImageItem> tempSelectImgs = new ArrayList<ImageItem>();// 选择的图片的临时列表
 	
 	public static String MainActivityName;
 	public static Intent intent = new Intent();
@@ -238,7 +238,4 @@ public class AlbumUtils {
 		}
 		return bitmap;
 	}
-	
-	
-	
 }
