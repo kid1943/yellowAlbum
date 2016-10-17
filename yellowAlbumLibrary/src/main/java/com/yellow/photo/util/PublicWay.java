@@ -13,6 +13,6 @@ import android.app.Activity;
 public class PublicWay {
 	public static List<Activity> activityList = new ArrayList<Activity>();
 	public static int SELECTIMGNUM = 3;
-	public static int SURPLUSSELECTIMGNUM = 0;//剩余未选图片
+	public static int SURPLUS_SEL_NUM = 0;//剩余未选图片
 	
 }

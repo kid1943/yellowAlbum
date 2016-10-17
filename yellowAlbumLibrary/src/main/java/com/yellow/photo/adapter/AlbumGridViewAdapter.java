@@ -51,7 +51,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 		cache = BitmapCache.getBitmapCache();
 		this.dataList = dataList;
 		selectPosition = selectedDataList.size();
-		while(selectPosition>PublicWay.SELECTIMGNUM-PublicWay.SURPLUSSELECTIMGNUM){
+		while(selectPosition>PublicWay.SELECTIMGNUM-PublicWay.SURPLUS_SEL_NUM){
 			tempSelectDataList.add(selectedDataList.get(selectPosition-1));
 			--selectPosition;
 		}		
@@ -123,7 +123,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 				rl_camera.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if(AlbumGlobalUtils.totalSelectImgs.size() >= PublicWay.SELECTIMGNUM){
+						if(AlbumGlobalUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM){
 			                Toast.makeText(mContext, "超出可选张数", Toast.LENGTH_SHORT).show();
 		                    return;   
 						}

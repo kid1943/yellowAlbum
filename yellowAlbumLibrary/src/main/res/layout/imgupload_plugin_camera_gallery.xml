@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/albumback" >
+    android:background="@color/albumback">
 
     <RelativeLayout
         android:id="@+id/headview"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/s50"
         android:background="@color/red"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/back"
@@ -48,12 +49,19 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
+
+    <com.yellow.customview.MyToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:title="预览" />
+
     <RelativeLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/s50"
         android:layout_alignParentBottom="true"
-        android:background="#e0000000" >
+        android:background="#e0000000">
 
         <TextView
             android:id="@+id/send_button"
@@ -62,8 +70,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/s10"
-            android:text="@string/finish" 
-            />
+            android:text="@string/finish" />
     </RelativeLayout>
 
     <com.yellow.photo.zoom.ViewPagerFixed
@@ -71,10 +78,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_layout"
-        android:layout_below="@id/headview"
+        android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
         android:background="@color/plugin_camera_black"
-        android:unselectedAlpha="1" >
-    </com.yellow.photo.zoom.ViewPagerFixed>
+        android:unselectedAlpha="1"/>
 
 </RelativeLayout>

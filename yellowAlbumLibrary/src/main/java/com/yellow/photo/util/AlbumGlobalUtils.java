@@ -33,7 +33,7 @@ public class AlbumGlobalUtils {
 	public static Context context;
 	public static Bitmap portrait;
 	public static byte[] portraitBytes;
-	public static ArrayList<ImageItem> totalSelectImgs = new ArrayList<ImageItem>(); // 选择的图片的临时列表
+	public static ArrayList<ImageItem> totalSelImgs = new ArrayList<ImageItem>(); // 选择的图片的临时列表
 	public static ArrayList<ImageItem> tempSelectImgs = new ArrayList<ImageItem>();
 	
 	public static String MainActivityName;
