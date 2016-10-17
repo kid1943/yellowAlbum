@@ -20,7 +20,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.yellow.photo.activity.R;
 import com.yellow.photo.activity.AlbumActivity;
-import com.yellow.photo.util.AlbumGlobalUtils;
+import com.yellow.photo.util.AlbumUtils;
 import com.yellow.photo.util.BitmapCache;
 import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
@@ -123,7 +123,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 				rl_camera.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if(AlbumGlobalUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM){
+						if(AlbumUtils.totalSelImgs.size() >= PublicWay.SELECTIMGNUM){
 			                Toast.makeText(mContext, "超出可选张数", Toast.LENGTH_SHORT).show();
 		                    return;   
 						}
@@ -167,7 +167,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 				  ImageItem item = dataList.get(position - 1);
 				  viewHolder.imageView.setTag(item.imagePath);
 //				  BitmapAndGlobalUtils.displayAlbumImage("file://" + item.imagePath, viewHolder.imageView);
-				  AlbumGlobalUtils.displayImg("file://" + item.imagePath, viewHolder.imageView, AlbumGlobalUtils.displayImgOptions1);
+				  AlbumUtils.displayImg("file://" + item.imagePath, viewHolder.imageView, AlbumUtils.displayImgOptions1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

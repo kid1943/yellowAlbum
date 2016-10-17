@@ -1,7 +1,7 @@
 package com.yellow.photo.activity;
 
 import com.yellow.customview.MyToolBar;
-import com.yellow.photo.util.AlbumGlobalUtils;
+import com.yellow.photo.util.AlbumUtils;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -25,8 +25,8 @@ public class BaseActivty extends Activity {
         toolbar = (MyToolBar) findViewById(R.id.toolbar);
         headview = (RelativeLayout) findViewById(R.id.headview);
         initToolBar();
-        if (AlbumGlobalUtils.headViewTitleresId != 0) {
-            headview.setBackground(this.getResources().getDrawable(AlbumGlobalUtils.headViewTitleresId));
+        if (AlbumUtils.headViewTitleresId != 0) {
+            headview.setBackground(this.getResources().getDrawable(AlbumUtils.headViewTitleresId));
         }
     }
 

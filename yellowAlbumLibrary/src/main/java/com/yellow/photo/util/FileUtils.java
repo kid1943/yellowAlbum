@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import android.graphics.Bitmap;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 
 public class FileUtils {
@@ -14,7 +13,7 @@ public class FileUtils {
 	public static String SDPATH = "";
 
 	public static void saveBitmap(Bitmap bm, String picName) {
-			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
+			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumUtils.takePhotoFolder+"/";
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");

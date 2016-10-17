@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.yellow.photo.adapter.FolderAdapter;
 import com.yellow.photo.adapter.FolderAdapter.FolderSelectListener;
-import com.yellow.photo.util.AlbumGlobalUtils;
+import com.yellow.photo.util.AlbumUtils;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 
@@ -62,7 +62,7 @@ public class ShowImageFilesActivity extends BaseActivty {
 		public void onClick(View v) {
 			// 清空选择的图片
 			// BimpNGlobalUtils.tempSelectBitmap.clear();
-			AlbumGlobalUtils.back2MainActivity(ShowImageFilesActivity.this,
+			AlbumUtils.back2MainActivity(ShowImageFilesActivity.this,
 					false);
 		}
 	}

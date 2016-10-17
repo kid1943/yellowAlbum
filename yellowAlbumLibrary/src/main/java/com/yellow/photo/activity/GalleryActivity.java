@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
-import com.yellow.photo.util.AlbumGlobalUtils;
+import com.yellow.photo.util.AlbumUtils;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 import com.yellow.photo.zoom.PhotoView;
@@ -59,14 +59,14 @@ public class GalleryActivity extends BaseActivty {
         pager.setOnPageChangeListener(pageChangeListener);
 
         if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
-            for (int i = 0; i < AlbumGlobalUtils.totalSelImgs.size(); i++) {
-                if (i >= AlbumGlobalUtils.totalSelImgs.size() - tempSelectImgs) {
-                    initListViews(AlbumGlobalUtils.totalSelImgs.get(i).getBitmap());
+            for (int i = 0; i < AlbumUtils.totalSelImgs.size(); i++) {
+                if (i >= AlbumUtils.totalSelImgs.size() - tempSelectImgs) {
+                    initListViews(AlbumUtils.totalSelImgs.get(i).getBitmap());
                 }
             }
         } else {
-            for (int i = 0; i < AlbumGlobalUtils.totalSelImgs.size(); i++) {
-                initListViews(AlbumGlobalUtils.totalSelImgs.get(i).getBitmap());
+            for (int i = 0; i < AlbumUtils.totalSelImgs.size(); i++) {
+                initListViews(AlbumUtils.totalSelImgs.get(i).getBitmap());
             }
         }
         adapter = new MyPageAdapter(listViews);
@@ -97,7 +97,7 @@ public class GalleryActivity extends BaseActivty {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumGlobalUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
             }
         }
 
@@ -129,11 +129,11 @@ public class GalleryActivity extends BaseActivty {
     }
 
     public void isShowOkBt() {
-        if (AlbumGlobalUtils.totalSelImgs.size() > 0) {
+        if (AlbumUtils.totalSelImgs.size() > 0) {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumGlobalUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
             }
             send_bt.setPressed(true);
             send_bt.setClickable(true);
@@ -163,7 +163,7 @@ public class GalleryActivity extends BaseActivty {
                 Intent intent = new Intent();
                 Class clazz = null;
                 try {
-                    clazz = Class.forName(AlbumGlobalUtils.MainActivityName);
+                    clazz = Class.forName(AlbumUtils.MainActivityName);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -221,26 +221,26 @@ public class GalleryActivity extends BaseActivty {
      */
     private void delPic() {
         if (listViews.size() == 1) {
-            AlbumGlobalUtils.totalSelImgs.clear();
-            AlbumGlobalUtils.max = 0;
+            AlbumUtils.totalSelImgs.clear();
+            AlbumUtils.max = 0;
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumGlobalUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
             }
             Intent intent = new Intent("data.broadcast.action");
             sendBroadcast(intent);
             finish();
         } else {
-            AlbumGlobalUtils.totalSelImgs.remove(location);
-            AlbumGlobalUtils.max--;
+            AlbumUtils.totalSelImgs.remove(location);
+            AlbumUtils.max--;
             pager.removeAllViews();
             listViews.remove(location);
             adapter.setListViews(listViews);
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumGlobalUtils.totalSelImgs.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.totalSelImgs.size() + ")");
             }
             adapter.notifyDataSetChanged();
         }
