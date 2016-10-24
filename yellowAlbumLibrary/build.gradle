@@ -30,14 +30,21 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile files('libs/universal-image-loader-1.9.5.jar')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 }
+
+
+
+
+
+
 
 def siteUrl = 'https://github.com/kid1943/yellowAlbum' // 项目的主页
 def gitUrl = 'https://github.com/kid1943/yellowAlbum.git' // Git仓库的url
 
 
-group = "com.yellow.photo.activity" // Maven Group ID for the artifact，一般填你唯一的包名\
+group = "com.yellow.photo.activity" // Maven Group ID for the artifact，一般填你唯一的包名
 
 install {
     repositories.mavenInstaller {
@@ -46,7 +53,8 @@ install {
             project {
                 packaging 'aar'
                 // Add your description here
-                name 'Android Album' //项目描述
+                //项目描述
+                name 'An Android Album Lib'
                 url siteUrl
                 // Set your license
                 licenses {
@@ -57,8 +65,8 @@ install {
                 }
                 developers {
                     developer {
-                        id 'zhengxiaopeng'    //填写的一些基本信息
-                        name 'Rocko'
+                        id 'yellow'       //填写开发者基本信息
+                        name 'yellow'
                         email '798438829@qq.com'
                     }
                 }
@@ -71,22 +79,36 @@ install {
         }
     }
 }
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//task javadoc(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += configurations.compile
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//}
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//javadoc {
+//    options{
+//        encoding "UTF-8"
+//        charSet 'UTF-8'
+//        author true
+//        version true
+//        links "http://docs.oracle.com/javase/7/docs/api"
+//        title "YelllowAlbum"
+//    }
+//}
+//
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
+
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
@@ -94,8 +116,8 @@ bintray {
     key = properties.getProperty("bintray.apikey")
     configurations = ['archives']
     pkg {
-        repo = "maven"
-        name = "yellowAlbum"    //发布到JCenter上的项目名字
+        repo = "maven"  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
+        name = "yellowAlbum"  //发布到Bintray上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
