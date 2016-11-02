@@ -463,12 +463,7 @@ public class AlbumActivity extends BaseActivty {
     }
 
 
-    /**
-     * 清空相册数据
-     *
-     * @author yellow
-     * @time 2016-3-22 下午3:59:58
-     */
+
     public void clearData() {
         for (Activity activity : PublicWay.activityList) {
             if (!activity.isFinishing()) {

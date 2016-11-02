@@ -19,9 +19,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 /**
- * http://blog.csdn.net/lmj623565791/article/details/39761281
- * 
- * @author zhy
  * 
  */
 public class ClipZoomImageView extends ImageView implements
@@ -247,9 +244,9 @@ public class ClipZoomImageView extends ImageView implements
 		mScaleGestureDetector.onTouchEvent(event);
 
 		float x = 0, y = 0;
-		// 拿到触摸点的个数
+		// get the touch points count
 		final int pointerCount = event.getPointerCount();
-		// 得到多个触摸点的x与y均值
+		//get the touch point x and y's average
 		for (int i = 0; i < pointerCount; i++)
 		{
 			x += event.getX(i);
@@ -258,9 +255,6 @@ public class ClipZoomImageView extends ImageView implements
 		x = x / pointerCount;
 		y = y / pointerCount;
 
-		/**
-		 * 每当触摸点发生变化时，重置mLasX , mLastY
-		 */
 		if (pointerCount != lastPointerCount)
 		{
 			isCanDrag = false;
@@ -285,7 +279,7 @@ public class ClipZoomImageView extends ImageView implements
 				{
 
 					RectF rectF = getMatrixRectF();
-					// 如果宽度小于屏幕宽度，则禁止左右移动
+					// if width smaller than screen width forbiden horizen move
 					if (rectF.width() <= getWidth() - mHorizontalPadding * 2)
 					{
 						dx = 0;
@@ -313,11 +307,7 @@ public class ClipZoomImageView extends ImageView implements
 		return true;
 	}
 
-	/**
-	 * 获得当前的缩放比例
-	 * 
-	 * @return
-	 */
+
 	public final float getScale()
 	{
 		mScaleMatrix.getValues(matrixValues);
@@ -340,11 +330,9 @@ public class ClipZoomImageView extends ImageView implements
 	}
 
 	/**
-	 * 水平方向与View的边距
 	 */
 	private int mHorizontalPadding;
 	/**
-	 * 垂直方向与View的边距
 	 */
 	private int mVerticalPadding;
 
@@ -399,11 +387,6 @@ public class ClipZoomImageView extends ImageView implements
 
 	}
 
-	/**
-	 * 剪切图片，返回剪切后的bitmap对象
-	 * 
-	 * @return
-	 */
 	public Bitmap clip()
 	{
 		Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
@@ -420,7 +403,6 @@ public class ClipZoomImageView extends ImageView implements
 	}
 
 	/**
-	 * 边界检测
 	 */
 	private void checkBorder()
 	{
@@ -463,7 +445,6 @@ public class ClipZoomImageView extends ImageView implements
 	}
 
 	/**
-	 * 是否是拖动行为
 	 * 
 	 * @param dx
 	 * @param dy

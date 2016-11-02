@@ -164,29 +164,6 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 		return mZoomEnabled;
 	}
 
-	/**
-	 * Clean-up the resources attached to this object. This needs to be called
-	 * when the ImageView is no longer used. A good example is from
-	 * {@link android.view.View#onDetachedFromWindow()} or from
-	 * {@link android.app.Activity#onDestroy()}. This is automatically called if
-	 * you are using {@link uk.co.senab.photoview.PhotoView}.
-	 */
-	@SuppressLint("NewApi")
-	// @SuppressWarnings("deprecation")
-	// public final void cleanup() {
-	// if (null != mImageView) {
-	// mImageView.get().getViewTreeObserver().removeGlobalOnLayoutListener(this);
-	// }
-	// mViewTreeObserver = null;
-	//
-	// // Clear listeners too
-	// mMatrixChangeListener = null;
-	// mPhotoTapListener = null;
-	// mViewTapListener = null;
-	//
-	// // Finally, clear ImageView
-	// mImageView = null;
-	// }
 	@SuppressWarnings("deprecation")
 	public final void cleanup() {
 		if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {

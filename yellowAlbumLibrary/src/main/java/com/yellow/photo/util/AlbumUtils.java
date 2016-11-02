@@ -76,12 +76,7 @@ public class AlbumUtils {
 		}
 	}
 
-	/**
-	 * 调用相册时必须要先初始化
-	 * 
-	 * @param ActivityName
-	 * @param activity
-	 */
+	//调用相册时必须要先初始化
 	public static void initUpLoadImg(String ActivityName, Activity activity) {
 		// 入口Activity的全类名com.xxx.xxx.TxCreateHelpActivity
 		AlbumUtils.context = activity;
@@ -95,12 +90,7 @@ public class AlbumUtils {
 		Res.init(activity);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
 	}
 
-	/**
-	 * 调用相册时必须要先初始化
-	 * @param ActivityName
-	 * @param activity
-	 * @param headViewTitleresId 相册头部样式的id
-	 */
+
 	public static void initUpLoadImg(String ActivityName, Activity activity, int headViewTitleresId) {
 		takePhotoFolder = activity.getResources().getString(R.string.album_name);
 		context = activity;
@@ -160,20 +150,9 @@ public class AlbumUtils {
             .build(); 
 		}
 	}
+	
+	
 
-	public static void displayImage(String url,ImageView iv){
-		getImageLoader().displayImage(url, iv, getImageLoaderOptions());
-	}
-	
-	
-	/**
-	 * 使用自定义的ImageLoaderOptions去加载
-	 *@author xp
-	 *@time 2016-4-18 下午4:04:16 
-	 * @param url
-	 * @param iv
-	 * @param myOptions
-	 */
 	public static void displayImg(String url , ImageView iv, DisplayImageOptions myOptions){
 		getImageLoader().displayImage(url, iv, myOptions);
 	}

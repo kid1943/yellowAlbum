@@ -5,9 +5,7 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.drawable.Drawable;
 
-/**
- * 加载R文件里面的内容
- */
+
 public class Res {
 
 	// 文件路径名
@@ -22,10 +20,6 @@ public class Res {
 		context = null;
 	}
 
-	/**
-	 * layout文件夹下的xml文件id获取
-	 * 
-	 */
 	public static int getLayoutID(String layoutName) {
 		try {
 			return resources.getIdentifier(layoutName, "layout", pkgName);
@@ -40,18 +34,10 @@ public class Res {
 		return resources.getIdentifier(widgetName, "id", pkgName);
 	}
 
-	/**
-	 * anim文件夹下的xml文件id获取
-	 * 
-	 */
 	public static int getAnimID(String animName) {
 		return resources.getIdentifier(animName, "anim", pkgName);
 	}
 
-	/**
-	 * xml文件夹下id获取
-	 * 
-	 */
 	public static int getXmlID(String xmlName) {
 		return resources.getIdentifier(xmlName, "xml", pkgName);
 	}
@@ -62,18 +48,11 @@ public class Res {
 		return (XmlResourceParser) resources.getXml(xmlId);
 	}
 
-	/**
-	 * raw文件夹下id获取
-	 * 
-	 */
+
 	public static int getRawID(String rawName) {
 		return resources.getIdentifier(rawName, "raw", pkgName);
 	}
 
-	/**
-	 * drawable文件夹下文件的id
-	 * 
-	 */
 	public static int getDrawableID(String drawName) {
 		return resources.getIdentifier(drawName, "drawable", pkgName);
 	}
@@ -84,11 +63,6 @@ public class Res {
 		return resources.getDrawable(drawId);
 	}
 
-	/**
-	 * value文件夹
-	 * 
-	 */
-	// 获取到value文件夹下的attr.xml里的元素的id
 	public static int getAttrID(String attrName) {
 		return resources.getIdentifier(attrName, "attr", pkgName);
 	}
