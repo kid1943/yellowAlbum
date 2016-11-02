@@ -12,3 +12,8 @@ from now it will be completed
 
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album.gif?raw=true)
 
+
+
+
+gradle：  compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.0.3'
+
