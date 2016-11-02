@@ -15,5 +15,11 @@ from now it will be completed
 
 
 
-gradle：  compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.0.3'
+
+
+
+
+
+gradle：  compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.1.0'
+
 
