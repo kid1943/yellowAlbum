@@ -35,12 +35,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.activity.GalleryActivity;
-import com.yellow.photo.util.AlbumGlobalUtils;
+import com.yellow.photo.util.AlbumUtils;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
-
 import java.io.File;
 
 /**
@@ -49,32 +48,42 @@ import java.io.File;
  */
 public class MainActivity extends Activity {
 
-   private GridView noScrollgridview;
-   private GridAdapter adapter;
-   private View parentView;
-   private PopupWindow pop = null;
-   private LinearLayout ll_popup;
+    private GridView noScrollgridview;
+    private GridAdapter adapter;
+    private View parentView;
+    private PopupWindow pop = null;
+    private LinearLayout ll_popup;
     private Button btn_cut;
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
-   protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       Log.i("MainActivity", "onCreate####");
        makeDir();
-
        // 入口Activity的全类名
-       AlbumGlobalUtils.MainActivityName = this.getClass().getName();
-       AlbumGlobalUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
+       AlbumUtils.MainActivityName = this.getClass().getName();
+       AlbumUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
        Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
-//		PublicWay.activityList.add(this);// 添加Activity集合
        parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);
        setContentView(parentView);
        init();
    }
 
-
     @Override
     protected void onStart() {
-        Log.i("MainActivity", "onStart####");
+        AlbumUtils.selImgList.size();
+        Log.i("MainActivity", "onStart--"+AlbumUtils.selImgList.size());
+        for(ImageItem imageItem : AlbumUtils.selImgList){
+            Log.i("MainActivity", "img---"+imageItem.getImagePath());
+        }
         adapter.update();
         super.onStart();
     }
@@ -159,13 +168,11 @@ public class MainActivity extends Activity {
               MainActivity.this.startActivity(intent0);
            }
        });
-
    }
 
    @SuppressLint("HandlerLeak")
    public class GridAdapter extends BaseAdapter {
        private LayoutInflater inflater;
-       private int selectedPosition = -1;
        private boolean shape;
        public boolean isShape() {
            return shape;
@@ -183,8 +190,7 @@ public class MainActivity extends Activity {
        }
 
        public int getCount() {
-           Log.i("MainActivity", "getCount---"+(AlbumGlobalUtils.totalSelImgs.size()+1));
-           return (AlbumGlobalUtils.totalSelImgs.size() + 1);
+           return (AlbumUtils.selImgList.size() + 1);
        }
 
        public Object getItem(int arg0) {
@@ -193,14 +199,6 @@ public class MainActivity extends Activity {
 
        public long getItemId(int arg0) {
            return 0;
-       }
-
-       public void setSelectedPosition(int position) {
-           selectedPosition = position;
-       }
-
-       public int getSelectedPosition() {
-           return selectedPosition;
        }
 
        public View getView(int position, View convertView, ViewGroup parent) {
@@ -217,55 +215,32 @@ public class MainActivity extends Activity {
            if (position == 0) {
                holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused));
            } else {
-               holder.image.setImageBitmap(AlbumGlobalUtils.totalSelImgs.get(position - 1).getBitmap());
-               holder.imgPath = AlbumGlobalUtils.totalSelImgs.get(position - 1).imagePath;
+               holder.image.setImageBitmap(AlbumUtils.selImgList.get(position - 1).getBitmap());
+               holder.imgPath = AlbumUtils.selImgList.get(position - 1).imagePath;
                // 在这里设置图片的路径
                // tempSelectBitmap图片集合不包括"加"图片
            }
            return convertView;
        }
 
-       Handler handler = new Handler() {
-           public void handleMessage(Message msg) {
-               switch (msg.what) {
-               case 1:
-                   Log.i("MainActivity", "handler--1111");
-                   adapter.notifyDataSetChanged();
-                   break;
-               }
-               super.handleMessage(msg);
-           }
-       };
-
        public void loading() {
-                       if (AlbumGlobalUtils.max == AlbumGlobalUtils.totalSelImgs.size()) {
-                           Message message = new Message();
-                           message.what = 1;
-                           handler.sendMessage(message);
-                       } else if (AlbumGlobalUtils.max < AlbumGlobalUtils.totalSelImgs.size()) {
-                           AlbumGlobalUtils.max += 1;
-                           Message message = new Message();
-                           message.what = 1;
-                           handler.sendMessage(message);
-                       } else {
-                           AlbumGlobalUtils.max -= 1;
-                           Message message = new Message();
-                           message.what = 1;
-                           handler.sendMessage(message);
-                       }
-                   }
-   }
-
-   public String getString(String s) {
-       String path = null;
-       if (s == null)
-           return "";
-       for (int i = s.length() - 1; i > 0; i++) {
-           s.charAt(i);
+           if (AlbumUtils.max == AlbumUtils.selImgList.size()) {
+               Message message = new Message();
+               message.what = 1;
+               handler.sendMessage(message);
+           } else if (AlbumUtils.max < AlbumUtils.selImgList.size()) {
+               AlbumUtils.max += 1;
+               Message message = new Message();
+               message.what = 1;
+               handler.sendMessage(message);
+           } else {
+               AlbumUtils.max -= 1;
+               Message message = new Message();
+               message.what = 1;
+               handler.sendMessage(message);
+           }
        }
-       return path;
    }
-
 
    private static final int TAKE_PICTURE = 0x000001;
 
@@ -273,25 +248,21 @@ public class MainActivity extends Activity {
    public void photo() {
        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
        startActivityForResult(openCameraIntent, TAKE_PICTURE);
-
-
    }
-
 
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        switch (requestCode) {
        case TAKE_PICTURE:
-           if (AlbumGlobalUtils.totalSelImgs.size() < 4 && resultCode == RESULT_OK) {
-               Log.i("MainActivity", "MainActivity----onActivityResult");
+           if (AlbumUtils.selImgList.size() < 4 && resultCode == RESULT_OK) {
                String sdPath = null;
                String fileName = String.valueOf(System.currentTimeMillis());
                Bitmap bm = (Bitmap) data.getExtras().get("data");
-               sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumGlobalUtils.takePhotoFolder+"/";
+               sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumUtils.takePhotoFolder+"/";
                FileUtils.saveBitmap(bm, fileName);
                ImageItem takePhoto = new ImageItem();
                takePhoto.setImagePath(sdPath+fileName);
                takePhoto.setBitmap(bm);
-               AlbumGlobalUtils.totalSelImgs.add(takePhoto);
+               AlbumUtils.selImgList.add(takePhoto);
            }
            break;
        }
@@ -314,16 +285,15 @@ public class MainActivity extends Activity {
        public String imgPath;
    }
 
+     /**
+      *创建图片文件夹
+      * Created by yellow on 11:08  2016/10/17.
+      */
     private void makeDir(){
         String dir = Environment.getExternalStorageDirectory().getPath() + File.separator+"luhe" ;
         File dirFile = new File(dir);
-        Log.i("MainActivity", "dir--" + dir);
         if(!dirFile.exists()){
             boolean b  = dirFile.mkdir();
-            Log.i("MainActivity", "makeDir--b--"+b);
         }
     }
-
-
-
 }

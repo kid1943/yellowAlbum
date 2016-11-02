@@ -5,7 +5,6 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -45,7 +44,7 @@
         android:layout_margin="8dp"
         android:background="@null"
         android:gravity="left|top"
-        android:hint="说点什么吧..."></EditText>
+        android:hint="说点什么吧..." />
 
     <GridView
         android:id="@+id/noScrollgridview"
@@ -55,8 +54,5 @@
         android:horizontalSpacing="3dp"
         android:numColumns="5"
         android:scrollbars="none"
-        android:verticalSpacing="5dp"></GridView>
-
-
-
+        android:verticalSpacing="5dp" />
 </LinearLayout>
