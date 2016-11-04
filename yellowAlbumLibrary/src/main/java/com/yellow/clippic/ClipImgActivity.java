@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+
+import com.yellow.photo.activity.Const;
 import com.yellow.photo.activity.R;
 import com.yellow.clippic.view.ClipImageLayout;
 import com.yellow.photo.activity.BaseActivty;
@@ -29,7 +33,7 @@ public class ClipImgActivity extends BaseActivty {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.clipimg_layout);
 		super.onCreate(savedInstanceState);
-		imgpath = getIntent().getStringExtra("imgpath");
+		imgpath = getIntent().getStringExtra(Const.IMG_PATH);
 		initView();
 	}
 
@@ -66,12 +70,11 @@ public class ClipImgActivity extends BaseActivty {
 		option.inSampleSize = calculateInSampleSize(option, screenWidth, screenHeight);
 		option.inJustDecodeBounds = false;
 		bitmap4Clip = BitmapFactory.decodeFile(imgpath, option);
-		Log.i("ClipImgActivity  ", "被剪切图片的大少---" + bitmap4Clip.getByteCount()/ 1024 + "kb");
 		mClipImageLayout.mZoomImageView.setImageBitmap(bitmap4Clip);
 	}
 
-	private int calculateInSampleSize(Options option, int reqWidth,
-			int reqHeight) {
+	private int calculateInSampleSize(Options option, int reqWidth
+			                                        , int reqHeight) {
 		// 源图片的宽度
 		int width = option.outWidth;
 		int height = option.outHeight;
@@ -91,7 +94,11 @@ public class ClipImgActivity extends BaseActivty {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
 		byte[] datas = baos.toByteArray();
-		File file = new File(this.getExternalCacheDir().toString() + "/potrait.jpeg");
+
+        Random random = new Random();
+		int ran = random.nextInt(1000);
+		File file = new File(this.getExternalCacheDir().toString() + "/"+ran+".jpeg");
+		Log.i("ClipImgActivity", "clipImg---"+file.getPath());
 		try {
 			if (!file.exists()) {
 				file.createNewFile();

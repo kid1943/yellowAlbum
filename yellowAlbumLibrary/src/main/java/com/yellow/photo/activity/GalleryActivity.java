@@ -17,7 +17,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.TextView;
 import com.yellow.photo.util.AlbumManager;
-import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 import com.yellow.photo.zoom.PhotoView;
 import com.yellow.photo.zoom.ViewPagerFixed;
@@ -39,7 +38,6 @@ public class GalleryActivity extends BaseActivty {
     private ArrayList<View> listViews = null;
     private ViewPagerFixed pager;
     private MyPageAdapter adapter;
-
     private Context mContext;
     private int tempSelectImgs;//本次在相册中选中的图片数量
 
@@ -49,7 +47,6 @@ public class GalleryActivity extends BaseActivty {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imgupload_plugin_camera_gallery);
         super.onCreate(savedInstanceState);
-        PublicWay.activityList.add(this);
         mContext = this;
         initData();
         initView();
@@ -161,17 +158,6 @@ public class GalleryActivity extends BaseActivty {
 //                intent.setClass(GalleryActivity.this, ShowFolderPhotosActivity.class);
                 startActivity(intent);
             } else if (activityMark == Const.FROM_OUTSIDE_ACTIVITY) {
-                this.finish();
-                Intent intent = new Intent();
-                Class clazz = null;
-                try {
-                    clazz = Class.forName(AlbumManager.MainActivityName);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                intent.setClass(mContext, clazz);
-                startActivity(intent);
-            } else {
                 finish();
             }
         }

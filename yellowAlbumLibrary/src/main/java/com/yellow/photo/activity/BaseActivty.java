@@ -2,6 +2,7 @@ package com.yellow.photo.activity;
 
 import com.yellow.customview.MyToolBar;
 import com.yellow.photo.util.AlbumManager;
+import com.yellow.photo.util.PublicWay;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ public class BaseActivty extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PublicWay.activityList.add(this);
         initBaseView();
     }
 

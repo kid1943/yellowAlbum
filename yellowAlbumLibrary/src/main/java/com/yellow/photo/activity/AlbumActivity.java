@@ -34,7 +34,6 @@ import com.yellow.photo.adapter.FolderAdapter.FolderSelectListener;
 import com.yellow.photo.popupwin.FolderPopupWin;
 import com.yellow.photo.util.AlbumHelper;
 import com.yellow.photo.util.AlbumManager;
-import com.yellow.photo.util.Cons;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageBucket;
 import com.yellow.photo.util.ImageItem;
@@ -65,8 +64,6 @@ public class AlbumActivity extends BaseActivty {
     public static boolean isPortrait; // 判断是否是要选择裁剪的图片
     public int selectImgNum;// 选择图片的数目
     private RelativeLayout bottom_layout;
-    public final int TAKE_PICTURE = 0x000001;
-    private String cutimgpath; // 剪切图片的路径
     private FolderPopupWin folderPopupWin;
     //本次进入相册一共选中的图片
     private int tempSelectImgs = 0;
@@ -75,12 +72,11 @@ public class AlbumActivity extends BaseActivty {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imgupload_plugin_camera_album);
-        isPortrait = getIntent().getBooleanExtra(Cons.IS_PORTRAIT, false);// 判断是否选择裁剪图片
+        isPortrait = getIntent().getBooleanExtra(Const.IS_PORTRAIT, false);// 判断是否选择裁剪图片
         super.onCreate(savedInstanceState);
         // 初始化要选择的图片数目
-        selectImgNum = getIntent().getIntExtra(Cons.SELECT_COUNT, 3);
+        selectImgNum = getIntent().getIntExtra(Const.SELECT_COUNT, 3);
         PublicWay.SELECTIMGNUM = selectImgNum;
-        PublicWay.activityList.add(this);
         PublicWay.SURPLUS_SEL_NUM = PublicWay.SELECTIMGNUM - AlbumManager.selImgList.size();
         // 注册一个广播，这个广播主要是用于在GalleryActivity进行预览时，防止当所有图片都删除完后，再回到该页面时被取消选中的图片仍处于选中状态
         IntentFilter filter = new IntentFilter("data.broadcast.action");
@@ -130,7 +126,7 @@ public class AlbumActivity extends BaseActivty {
      */
     private void selectComplete() {
         overridePendingTransition(R.anim.activity_translate_in, R.anim.activity_translate_out);
-        AlbumManager.back2MainActivity(AlbumActivity.this);
+        AlbumManager.back2MainActivity();
         AlbumActivity.this.finish();
     }
 
@@ -295,10 +291,8 @@ public class AlbumActivity extends BaseActivty {
 
         // 先判断是否是头像选择
         if (!isPortrait) {
-            // 选择图片上传
             selectImg();
         } else {
-            // 选择要剪切的图片
             selectNclipImg();
         }
     }
@@ -309,7 +303,7 @@ public class AlbumActivity extends BaseActivty {
             public void onItemClick(ToggleButton view, int position, boolean isChecked, ToggleButton chooseBt) {
                 String path = dataList.get(position).getImagePath();
                 Intent intent = new Intent(AlbumActivity.this, ClipImgActivity.class);
-                intent.putExtra("imgpath", path);
+                intent.putExtra(Const.IMG_PATH, path);
                 startActivityForResult(intent, 0);
             }
         });
@@ -403,7 +397,7 @@ public class AlbumActivity extends BaseActivty {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case TAKE_PICTURE:
+            case Const.TAKE_PICTURE:
                 String sdPath = null;
                 Log.e("TAKE_PICTURE", "TAKE_PICTURE-----");
                 if (AlbumManager.selImgList.size() < PublicWay.SELECTIMGNUM && resultCode == Activity.RESULT_OK) {
@@ -423,16 +417,17 @@ public class AlbumActivity extends BaseActivty {
                         startActivityForResult(intent, 0);
                         AlbumManager.selImgList.clear();
                     } else {
-                        AlbumManager.back2MainActivity(AlbumActivity.this);
+                        AlbumManager.back2MainActivity();
                         AlbumActivity.this.finish();
                     }
                     return;
                 }
                 break;
-            case 0:
+            case Const.CUT_PIC_RESULT:
                 if (data != null) {
-                    cutimgpath = data.getStringExtra("cutimgpath");
+                    AlbumManager.cutImgPath = data.getStringExtra("cutimgpath");
                 }
+                Log.i("AlbumActivity", "cutimgpath--" + AlbumManager.cutImgPath);
                 break;
         }
 
@@ -446,7 +441,7 @@ public class AlbumActivity extends BaseActivty {
                 e.printStackTrace();
             }
         }
-        AlbumManager.back2MainActivity(AlbumActivity.this);
+        AlbumManager.back2MainActivity();
     }
 
     @Override
@@ -467,8 +462,6 @@ public class AlbumActivity extends BaseActivty {
     public void onBackPressed() {
         finish();
     }
-
-
 
     public void clearData() {
         for (Activity activity : PublicWay.activityList) {

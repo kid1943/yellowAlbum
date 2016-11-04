@@ -138,9 +138,8 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 			
 			if (convertView == null) {
 				viewHolder = new ViewHolder();
-				convertView = LayoutInflater.from(mContext).inflate(R.layout.imgupload_plugin_camera_select_imageview 
-																												, parent
-																												, false);
+				convertView = LayoutInflater.from(mContext)
+						                    .inflate(R.layout.imgupload_plugin_camera_select_imageview, parent, false);
 				viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_view);
 				viewHolder.toggleButton = (ToggleButton) convertView.findViewById(R.id.toggle_button);
 				viewHolder.choosetoggle = (ToggleButton) convertView.findViewById(R.id.choosedbt);
@@ -166,7 +165,6 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 				try { 
 				  ImageItem item = dataList.get(position - 1);
 				  viewHolder.imageView.setTag(item.imagePath);
-//				  BitmapAndGlobalUtils.displayAlbumImage("file://" + item.imagePath, viewHolder.imageView);
 				  AlbumManager.displayImg("file://" + item.imagePath, viewHolder.imageView, AlbumManager.displayImgOptions1);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -180,7 +178,6 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 			} 
 					
 			try {
-//				if (tempSelectDataList.contains(dataList.get(position-1))) {
 					if (tempSelectDataList.contains(dataList.get(position-1))) {
 					viewHolder.toggleButton.setChecked(true);
 					viewHolder.choosetoggle.setChecked(true);
@@ -188,7 +185,6 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 					viewHolder.toggleButton.setChecked(false);
 					viewHolder.choosetoggle.setChecked(false);
 				}
-//			    }
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 	
@@ -229,8 +225,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 	}
 
 	public interface OnItemClickListener {
-		public void onItemClick(ToggleButton view, int position,
-				boolean isChecked, ToggleButton chooseBt);
+		 void onItemClick(ToggleButton view, int position, boolean isChecked, ToggleButton chooseBt);
 	}
 	
 	public void setDataList(List<ImageItem> list){
@@ -247,7 +242,4 @@ public class AlbumGridViewAdapter extends BaseAdapter {
         	view.setImageDrawable(null);
         }
 	}
-	
-	
-	
 }

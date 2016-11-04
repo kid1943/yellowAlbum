@@ -53,10 +53,7 @@ public class MainActivity extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i("MainActivity", "onCreate####");
-		// 入口Activity的全类名
-		AlbumManager.MainActivityName = this.getClass().getName();
-		AlbumManager.initLoadImgConfig(MainActivity.this.getClass().getName(), MainActivity.this);
+		AlbumManager.initLoadImgConfig(MainActivity.this);
 		Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
 //		PublicWay.activityList.add(this);// 添加Activity集合
 		parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);

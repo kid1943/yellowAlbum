@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import com.yellow.photo.activity.AlbumActivity;
+import com.yellow.photo.activity.Const;
 import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache;
@@ -33,8 +34,8 @@ public class AlbumManager {
 	public static Bitmap portrait;
 	public static byte[] portraitBytes;
 	public static ArrayList<ImageItem> selImgList = new ArrayList<ImageItem>();
-	
-	public static String MainActivityName;
+	public static String cutImgPath = "";
+
 	public static Intent intent = new Intent();
 	public static ExecutorService service = Executors.newFixedThreadPool(10);
 	public static int headColorId;
@@ -47,29 +48,17 @@ public class AlbumManager {
 	public static ArrayList<ImageView> imgeViewList;
 
 	@SuppressWarnings("rawtypes")
-	public static void back2MainActivity(Activity activity) {
-		Class clazz = null;
+	public static void back2MainActivity() {
 		try {
-			clazz = Class.forName(AlbumManager.MainActivityName);
 			intent.putExtra("isFromAlum", true);
 			if(portraitBytes != null && portraitBytes.length > 0){
 				intent.putExtra("portraitBytes", portraitBytes);
 			}
-			intent.setClass(activity, clazz);
-			activity.startActivity(intent);
 			for (Activity act : PublicWay.activityList) {
 				act.finish();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	public static void back2MainActivity(Activity activity, boolean goBack) {
-		if (goBack) {
-			back2MainActivity(activity);
-		} else {
-			activity.finish();
 		}
 	}
 
@@ -85,11 +74,11 @@ public class AlbumManager {
 		switch (perpose){
 			case CUT_PIC:
 				//剪切图片
-				intent.putExtra(Cons.IS_PORTRAIT, true);
+				intent.putExtra(Const.IS_PORTRAIT, true);
 				break;
 			case SEL_PIC:
 				//选择图片
-                intent.putExtra(Cons.SELECT_COUNT, count);
+                intent.putExtra(Const.SELECT_COUNT, count);
 				break;
 		}
 		context.startActivity(intent);
@@ -106,10 +95,9 @@ public class AlbumManager {
 	}
 
 	//调用相册时必须要先初始化
-	public static void initLoadImgConfig(String ActivityName, Activity activity) {
+	public static void initLoadImgConfig(Activity activity) {
 		// 入口Activity的全类名com.xxx.xxx.TxCreateHelpActivity
 		AlbumManager.context = activity;
-		AlbumManager.MainActivityName = ActivityName;
 		takePhotoFolder = activity.getResources().getString(R.string.album_name);
 		if(imageViewMap == null){
 			imageViewMap = new HashMap<String, ImageView>();
