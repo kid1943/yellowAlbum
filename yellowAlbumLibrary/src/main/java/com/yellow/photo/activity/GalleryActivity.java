@@ -216,7 +216,6 @@ public class GalleryActivity extends BaseActivty {
         finish();
     }
 
-
     /**
      * 删除正在浏览的照片
      * Created by yellow on 10:29  2016/10/17.
