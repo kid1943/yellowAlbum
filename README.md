@@ -26,6 +26,7 @@ an android album project
 
 
 依赖添加：  compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.1.1'
+
            compile 'com.android.support:appcompat-v7:23.4.0'
 
 
