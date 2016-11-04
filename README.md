@@ -22,7 +22,8 @@ an android album project
 4 其他可选配置:
   1) AlbumUtils.setHeadViewTitleCololr(R.color.red); 设置相册toolbar的颜色
 
-
+5 选中后的图片对象ImageItem集合存放在AlbumManager.selImgList中，通过集合中的ImageItem的getPath方法可以获取图片路径然后做你想做的操作。
+  剪切后的图片路径:AlbumManager.cutImgPath
 
 
 

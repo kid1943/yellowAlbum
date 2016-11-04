@@ -83,13 +83,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         AlbumManager.selImgList.size();
-        Log.i("MainActivity", "onStart--"+ AlbumManager.selImgList.size());
-        for(ImageItem imageItem : AlbumManager.selImgList){
-            Log.i("MainActivity", "img---"+imageItem.getImagePath());
-        }
-
         if(!TextUtils.isEmpty(AlbumManager.cutImgPath)){
-            Log.i("MainActivity", "cutImgPath--"+ AlbumManager.cutImgPath);
             AlbumManager.displayImg("file://" + AlbumManager.cutImgPath, iv_cut, AlbumManager.displayImgOptions1);
         }
         adapter.update();
