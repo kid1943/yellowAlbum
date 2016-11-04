@@ -19,7 +19,8 @@ an android album project
    第二个参数表示当第一个参数是UsePerpose.SEL_PIC时，进入相册所需要选择的图片数量
 
 
-
+4 其他可选配置:
+  1) AlbumUtils.setHeadViewTitleCololr(R.color.red); 设置相册toolbar的颜色
 
 
 

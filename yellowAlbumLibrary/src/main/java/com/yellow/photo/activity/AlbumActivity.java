@@ -194,7 +194,7 @@ public class AlbumActivity extends BaseActivty {
 
         rl_bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);
         if (isPortrait) {
-            AlbumManager.selImgList.clear();
+//            AlbumManager.selImgList.clear();
             rl_bottom_layout.setVisibility(View.GONE);
         }
         bottom_layout = (RelativeLayout) findViewById(R.id.bottom_layout);

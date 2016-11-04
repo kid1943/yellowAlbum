@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -33,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import com.yellow.photo.activity.AlbumActivity;
+
 import com.yellow.photo.activity.GalleryActivity;
 import com.yellow.photo.util.AlbumManager;
 import com.yellow.photo.util.FileUtils;
@@ -56,6 +57,8 @@ public class MainActivity extends Activity {
     private PopupWindow pop = null;
     private LinearLayout ll_popup;
     private Button btn_cut;
+    private ImageView iv_cut;
+
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -68,14 +71,13 @@ public class MainActivity extends Activity {
     };
 
     protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       makeDir();
-       AlbumManager.initLoadImgConfig(MainActivity.this.getClass().getName(), MainActivity.this);
-//       AlbumUtils.setHeadViewTitleCololr(R.color.red);
+        super.onCreate(savedInstanceState);
+        makeDir();
+        AlbumManager.initLoadImgConfig(MainActivity.this);
         Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
-       parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);
-       setContentView(parentView);
-       init();
+        parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);
+        setContentView(parentView);
+        initView();
    }
 
     @Override
@@ -85,11 +87,17 @@ public class MainActivity extends Activity {
         for(ImageItem imageItem : AlbumManager.selImgList){
             Log.i("MainActivity", "img---"+imageItem.getImagePath());
         }
+
+        if(!TextUtils.isEmpty(AlbumManager.cutImgPath)){
+            Log.i("MainActivity", "cutImgPath--"+ AlbumManager.cutImgPath);
+            AlbumManager.displayImg("file://" + AlbumManager.cutImgPath, iv_cut, AlbumManager.displayImgOptions1);
+        }
         adapter.update();
         super.onStart();
     }
 
-   public void init() {
+   public void initView() {
+       iv_cut = (ImageView) parentView.findViewById(R.id.iv_cut);
        btn_cut = (Button) parentView.findViewById(R.id.btn_cut);
        pop = new PopupWindow(MainActivity.this);
        pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -106,8 +114,8 @@ public class MainActivity extends Activity {
        Button bt1 = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_camera"));
        Button go2Album = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_Photo"));
        Button bt3 = (Button) view.findViewById(Res.getWidgetID("item_popupwindows_cancel"));
-       parent.setOnClickListener(new OnClickListener() {
 
+       parent.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
                pop.dismiss();
@@ -131,12 +139,14 @@ public class MainActivity extends Activity {
                ll_popup.clearAnimation();
            }
        });
+
        bt3.setOnClickListener(new OnClickListener() {
            public void onClick(View v) {
                pop.dismiss();
                ll_popup.clearAnimation();
            }
        });
+
        noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
        noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
        adapter = new GridAdapter(this);

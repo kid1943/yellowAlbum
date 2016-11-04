@@ -13,15 +13,12 @@
            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
         android:name="com.yellow.photo.activity.AlbumActivity"
         android:screenOrientation="portrait" />
-        <activity android:name="com.yellow.photo.activity.ShowImageFilesActivity" />
-        <activity android:name="com.yellow.photo.activity.ShowFolderPhotosActivity" />
         <activity android:name="com.yellow.photo.activity.GalleryActivity" />
         <activity android:name="com.yellow.clippic.ClipImgActivity" />
     </application>

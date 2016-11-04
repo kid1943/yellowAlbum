@@ -38,6 +38,13 @@
         android:layout_height="wrap_content"
         android:text="剪切图片" />
 
+    <ImageView
+        android:id="@+id/iv_cut"
+        android:scaleType="fitXY"
+        android:src="@drawable/loading"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="100dp"
