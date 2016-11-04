@@ -77,8 +77,21 @@ public class AlbumManager {
 	  * 打开相册
 	  * Created by yellow on 12:21  2016/11/4.
 	  */
-	public static void openAlbum(){
+	public static void openAlbum(UsePerpose perpose, int count){
+		if(count <= 0){
+            count = 3;
+		}
 		Intent intent = new Intent(context, AlbumActivity.class);
+		switch (perpose){
+			case CUT_PIC:
+				//剪切图片
+				intent.putExtra(Cons.IS_PORTRAIT, true);
+				break;
+			case SEL_PIC:
+				//选择图片
+                intent.putExtra(Cons.SELECT_COUNT, count);
+				break;
+		}
 		context.startActivity(intent);
 	}
 

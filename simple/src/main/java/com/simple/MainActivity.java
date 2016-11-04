@@ -40,6 +40,8 @@ import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
+import com.yellow.photo.util.UsePerpose;
+
 import java.io.File;
 
 /**
@@ -123,7 +125,7 @@ public class MainActivity extends Activity {
 
        go2Album.setOnClickListener(new OnClickListener() {
            public void onClick(View v) {
-               AlbumManager.openAlbum();
+               AlbumManager.openAlbum(UsePerpose.SEL_PIC, 4);
                overridePendingTransition(R.anim.activity_translate_in,R.anim.activity_translate_out);
                pop.dismiss();
                ll_popup.clearAnimation();
@@ -160,9 +162,7 @@ public class MainActivity extends Activity {
        btn_cut.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent0 = new Intent(MainActivity.this ,AlbumActivity.class);
-               intent0.putExtra("isPortrait", true);
-              MainActivity.this.startActivity(intent0);
+               AlbumManager.openAlbum(UsePerpose.CUT_PIC, 0);
            }
        });
    }

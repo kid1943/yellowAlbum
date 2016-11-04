@@ -34,6 +34,7 @@ import com.yellow.photo.adapter.FolderAdapter.FolderSelectListener;
 import com.yellow.photo.popupwin.FolderPopupWin;
 import com.yellow.photo.util.AlbumHelper;
 import com.yellow.photo.util.AlbumManager;
+import com.yellow.photo.util.Cons;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageBucket;
 import com.yellow.photo.util.ImageItem;
@@ -69,16 +70,15 @@ public class AlbumActivity extends BaseActivty {
     private FolderPopupWin folderPopupWin;
     //本次进入相册一共选中的图片
     private int tempSelectImgs = 0;
-    //调用相册的activity类
-    private String fromActivityName;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imgupload_plugin_camera_album);
-        isPortrait = getIntent().getBooleanExtra("isPortrait", false);// 判断是否选择裁剪图片
+        isPortrait = getIntent().getBooleanExtra(Cons.IS_PORTRAIT, false);// 判断是否选择裁剪图片
         super.onCreate(savedInstanceState);
         // 初始化要选择的图片数目
-        selectImgNum = getIntent().getIntExtra("selecnum", 3);
+        selectImgNum = getIntent().getIntExtra(Cons.SELECT_COUNT, 3);
         PublicWay.SELECTIMGNUM = selectImgNum;
         PublicWay.activityList.add(this);
         PublicWay.SURPLUS_SEL_NUM = PublicWay.SELECTIMGNUM - AlbumManager.selImgList.size();
