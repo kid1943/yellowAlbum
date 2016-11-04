@@ -16,7 +16,7 @@ an android album project
 
 3 调用AlbumManager.openAlbum(UsePerpose.CUT_PIC, 0)进入相册
    第一个参数为UsePerpose.CUT_PIC时表示进入相册剪切图片,为UsePerpose.SEL_PIC时表示进入相册浏览选择图片
-
+   第二个参数表示当第一个参数是UsePerpose.SEL_PIC时，进入相册所需要选择的图片数量
 
 
 
