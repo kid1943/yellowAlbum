@@ -13,7 +13,7 @@ public class FileUtils {
 	public static String SDPATH = "";
 
 	public static void saveBitmap(Bitmap bm, String picName) {
-			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumUtils.takePhotoFolder+"/";
+			SDPATH = Environment.getExternalStorageDirectory() + "/"+ AlbumManager.takePhotoFolder+"/";
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");

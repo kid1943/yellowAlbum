@@ -14,8 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.TextView;
-import com.yellow.photo.util.AlbumUtils;
+import com.yellow.photo.util.AlbumManager;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 import com.yellow.photo.zoom.PhotoView;
@@ -45,6 +46,7 @@ public class GalleryActivity extends BaseActivty {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //		setContentView(Res.getLayoutID("imgupload_plugin_camera_gallery"));// 切屏到主界面
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imgupload_plugin_camera_gallery);
         super.onCreate(savedInstanceState);
         PublicWay.activityList.add(this);
@@ -59,14 +61,14 @@ public class GalleryActivity extends BaseActivty {
         pager.setOnPageChangeListener(pageChangeListener);
 
         if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
-            for (int i = 0; i < AlbumUtils.selImgList.size(); i++) {
-                if (i >= AlbumUtils.selImgList.size() - tempSelectImgs) {
-                    initListViews(AlbumUtils.selImgList.get(i).getBitmap());
+            for (int i = 0; i < AlbumManager.selImgList.size(); i++) {
+                if (i >= AlbumManager.selImgList.size() - tempSelectImgs) {
+                    initListViews(AlbumManager.selImgList.get(i).getBitmap());
                 }
             }
         } else {
-            for (int i = 0; i < AlbumUtils.selImgList.size(); i++) {
-                initListViews(AlbumUtils.selImgList.get(i).getBitmap());
+            for (int i = 0; i < AlbumManager.selImgList.size(); i++) {
+                initListViews(AlbumManager.selImgList.get(i).getBitmap());
             }
         }
         adapter = new MyPageAdapter(listViews);
@@ -97,7 +99,7 @@ public class GalleryActivity extends BaseActivty {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumManager.selImgList.size() + ")");
             }
         }
 
@@ -129,11 +131,11 @@ public class GalleryActivity extends BaseActivty {
     }
 
     public void isShowOkBt() {
-        if (AlbumUtils.selImgList.size() > 0) {
+        if (AlbumManager.selImgList.size() > 0) {
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumManager.selImgList.size() + ")");
             }
             send_bt.setPressed(true);
             send_bt.setClickable(true);
@@ -156,14 +158,14 @@ public class GalleryActivity extends BaseActivty {
                 this.finish();
             } else if (activityMark == Const.FROM_SHOWFOLDERPHOTOS_ACTIVITY) {
                 this.finish();
-                intent.setClass(GalleryActivity.this, ShowFolderPhotosActivity.class);
+//                intent.setClass(GalleryActivity.this, ShowFolderPhotosActivity.class);
                 startActivity(intent);
             } else if (activityMark == Const.FROM_OUTSIDE_ACTIVITY) {
                 this.finish();
                 Intent intent = new Intent();
                 Class clazz = null;
                 try {
-                    clazz = Class.forName(AlbumUtils.MainActivityName);
+                    clazz = Class.forName(AlbumManager.MainActivityName);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -221,26 +223,26 @@ public class GalleryActivity extends BaseActivty {
      */
     private void delPic() {
         if (listViews.size() == 1) {
-            AlbumUtils.selImgList.clear();
-            AlbumUtils.max = 0;
+            AlbumManager.selImgList.clear();
+            AlbumManager.max = 0;
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumManager.selImgList.size() + ")");
             }
             Intent intent = new Intent("data.broadcast.action");
             sendBroadcast(intent);
             finish();
         } else {
-            AlbumUtils.selImgList.remove(location);
-            AlbumUtils.max--;
+            AlbumManager.selImgList.remove(location);
+            AlbumManager.max--;
             pager.removeAllViews();
             listViews.remove(location);
             adapter.setListViews(listViews);
             if (activityMark == Const.FROM_ALBUM_ACTIVITY) {
                 send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + tempSelectImgs + ")");
             } else {
-                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumUtils.selImgList.size() + ")");
+                send_bt.setText(Res.getString("finish") + "(" + (location + 1) + "/" + AlbumManager.selImgList.size() + ")");
             }
             adapter.notifyDataSetChanged();
         }

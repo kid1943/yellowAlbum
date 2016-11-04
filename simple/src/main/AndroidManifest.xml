@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yellow.photo.activity.AlbumActivity"
-            android:screenOrientation="portrait" />
+        android:name="com.yellow.photo.activity.AlbumActivity"
+        android:screenOrientation="portrait" />
         <activity android:name="com.yellow.photo.activity.ShowImageFilesActivity" />
         <activity android:name="com.yellow.photo.activity.ShowFolderPhotosActivity" />
         <activity android:name="com.yellow.photo.activity.GalleryActivity" />

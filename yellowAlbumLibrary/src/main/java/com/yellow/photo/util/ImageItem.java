@@ -64,7 +64,7 @@ public class ImageItem  implements Serializable ,Comparable<ImageItem>  {
 		}
 		if(bitmap == null){
 			try {
-				setBitmap(AlbumUtils.revitionImageSize(path));
+				setBitmap(AlbumManager.revitionImageSize(path));
 				return this.weakReferenceBitmap.get();
 			} catch (Throwable e) {
 				e.printStackTrace();

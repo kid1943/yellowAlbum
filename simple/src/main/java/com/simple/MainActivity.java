@@ -35,7 +35,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.activity.GalleryActivity;
-import com.yellow.photo.util.AlbumUtils;
+import com.yellow.photo.util.AlbumManager;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
@@ -68,10 +68,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        makeDir();
-       // 入口Activity的全类名
-       AlbumUtils.MainActivityName = this.getClass().getName();
-       AlbumUtils.initUpLoadImg(MainActivity.this.getClass().getName(), MainActivity.this);
-       Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
+       AlbumManager.initLoadImgConfig(MainActivity.this.getClass().getName(), MainActivity.this);
+//       AlbumUtils.setHeadViewTitleCololr(R.color.red);
+        Res.init(this);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
        parentView = getLayoutInflater().inflate(R.layout.imgupload_activity_selectimg,null);
        setContentView(parentView);
        init();
@@ -79,9 +78,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onStart() {
-        AlbumUtils.selImgList.size();
-        Log.i("MainActivity", "onStart--"+AlbumUtils.selImgList.size());
-        for(ImageItem imageItem : AlbumUtils.selImgList){
+        AlbumManager.selImgList.size();
+        Log.i("MainActivity", "onStart--"+ AlbumManager.selImgList.size());
+        for(ImageItem imageItem : AlbumManager.selImgList){
             Log.i("MainActivity", "img---"+imageItem.getImagePath());
         }
         adapter.update();
@@ -124,9 +123,7 @@ public class MainActivity extends Activity {
 
        go2Album.setOnClickListener(new OnClickListener() {
            public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this, AlbumActivity.class);
-               intent.putExtra("ActivityName", MainActivity.this.getClass().getName());// 获取完整类名传递给要调用的Activity
-               startActivity(intent);
+               AlbumManager.openAlbum();
                overridePendingTransition(R.anim.activity_translate_in,R.anim.activity_translate_out);
                pop.dismiss();
                ll_popup.clearAnimation();
@@ -190,7 +187,7 @@ public class MainActivity extends Activity {
        }
 
        public int getCount() {
-           return (AlbumUtils.selImgList.size() + 1);
+           return (AlbumManager.selImgList.size() + 1);
        }
 
        public Object getItem(int arg0) {
@@ -215,8 +212,8 @@ public class MainActivity extends Activity {
            if (position == 0) {
                holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused));
            } else {
-               holder.image.setImageBitmap(AlbumUtils.selImgList.get(position - 1).getBitmap());
-               holder.imgPath = AlbumUtils.selImgList.get(position - 1).imagePath;
+               holder.image.setImageBitmap(AlbumManager.selImgList.get(position - 1).getBitmap());
+               holder.imgPath = AlbumManager.selImgList.get(position - 1).imagePath;
                // 在这里设置图片的路径
                // tempSelectBitmap图片集合不包括"加"图片
            }
@@ -224,17 +221,17 @@ public class MainActivity extends Activity {
        }
 
        public void loading() {
-           if (AlbumUtils.max == AlbumUtils.selImgList.size()) {
+           if (AlbumManager.max == AlbumManager.selImgList.size()) {
                Message message = new Message();
                message.what = 1;
                handler.sendMessage(message);
-           } else if (AlbumUtils.max < AlbumUtils.selImgList.size()) {
-               AlbumUtils.max += 1;
+           } else if (AlbumManager.max < AlbumManager.selImgList.size()) {
+               AlbumManager.max += 1;
                Message message = new Message();
                message.what = 1;
                handler.sendMessage(message);
            } else {
-               AlbumUtils.max -= 1;
+               AlbumManager.max -= 1;
                Message message = new Message();
                message.what = 1;
                handler.sendMessage(message);
@@ -253,16 +250,16 @@ public class MainActivity extends Activity {
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        switch (requestCode) {
        case TAKE_PICTURE:
-           if (AlbumUtils.selImgList.size() < 4 && resultCode == RESULT_OK) {
+           if (AlbumManager.selImgList.size() < 4 && resultCode == RESULT_OK) {
                String sdPath = null;
                String fileName = String.valueOf(System.currentTimeMillis());
                Bitmap bm = (Bitmap) data.getExtras().get("data");
-               sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumUtils.takePhotoFolder+"/";
+               sdPath = Environment.getExternalStorageDirectory() + "/"+ AlbumManager.takePhotoFolder+"/";
                FileUtils.saveBitmap(bm, fileName);
                ImageItem takePhoto = new ImageItem();
                takePhoto.setImagePath(sdPath+fileName);
                takePhoto.setBitmap(bm);
-               AlbumUtils.selImgList.add(takePhoto);
+               AlbumManager.selImgList.add(takePhoto);
            }
            break;
        }

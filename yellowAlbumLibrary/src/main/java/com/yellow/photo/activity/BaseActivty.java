@@ -1,16 +1,14 @@
 package com.yellow.photo.activity;
 
 import com.yellow.customview.MyToolBar;
-import com.yellow.photo.util.AlbumUtils;
+import com.yellow.photo.util.AlbumManager;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
 public class BaseActivty extends Activity {
 
-    RelativeLayout headview;
     protected MyToolBar toolbar;
     protected MenuItem menuitem;
 
@@ -20,13 +18,11 @@ public class BaseActivty extends Activity {
         initBaseView();
     }
 
-    @SuppressWarnings("deprecation")
     private void initBaseView() {
         toolbar = (MyToolBar) findViewById(R.id.toolbar);
-        headview = (RelativeLayout) findViewById(R.id.headview);
         initToolBar();
-        if (AlbumUtils.headViewTitleresId != 0) {
-            headview.setBackground(this.getResources().getDrawable(AlbumUtils.headViewTitleresId));
+        if (AlbumManager.headColorId != 0) {
+            toolbar.setBackgroundColor(this.getResources().getColor(AlbumManager.headColorId));
         }
     }
 

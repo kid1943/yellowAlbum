@@ -14,9 +14,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache;
@@ -27,23 +26,21 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-public class AlbumUtils {
+public class AlbumManager {
 	public static int max = 0;
 	// 剪切的头像
 	public static Context context;
 	public static Bitmap portrait;
 	public static byte[] portraitBytes;
 	public static ArrayList<ImageItem> selImgList = new ArrayList<ImageItem>();
-	public static ArrayList<ImageItem> tempSelectImgs = new ArrayList<ImageItem>();// 选择的图片的临时列表
 	
 	public static String MainActivityName;
 	public static Intent intent = new Intent();
 	public static ExecutorService service = Executors.newFixedThreadPool(10);
-	public static int headViewTitleresId;
+	public static int headColorId;
 	//拍摄图片所在的文件夹
 	public static String takePhotoFolder;
 	public static ImageLoader imageLoader;
-	public static ImageLoader albumImageLoader;
 	public static DisplayImageOptions displayImgOptions0;
 	public static DisplayImageOptions displayImgOptions1;
 	public static HashMap<String, ImageView> imageViewMap;
@@ -53,9 +50,9 @@ public class AlbumUtils {
 	public static void back2MainActivity(Activity activity) {
 		Class clazz = null;
 		try {
-			clazz = Class.forName(AlbumUtils.MainActivityName);
+			clazz = Class.forName(AlbumManager.MainActivityName);
 			intent.putExtra("isFromAlum", true);
-			if(portraitBytes!=null&&portraitBytes.length>0){
+			if(portraitBytes != null && portraitBytes.length > 0){
 				intent.putExtra("portraitBytes", portraitBytes);
 			}
 			intent.setClass(activity, clazz);
@@ -76,41 +73,41 @@ public class AlbumUtils {
 		}
 	}
 
-	//调用相册时必须要先初始化
-	public static void initUpLoadImg(String ActivityName, Activity activity) {
-		// 入口Activity的全类名com.xxx.xxx.TxCreateHelpActivity
-		AlbumUtils.context = activity;
-		AlbumUtils.MainActivityName = ActivityName;
-		if(imageViewMap == null){
-			imageViewMap = new HashMap<String, ImageView>();
-		}
-		if(imgeViewList == null){
-			imgeViewList = new ArrayList<ImageView>();
-		}
-		Res.init(activity);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
+	 /**
+	  * 打开相册
+	  * Created by yellow on 12:21  2016/11/4.
+	  */
+	public static void openAlbum(){
+		Intent intent = new Intent(context, AlbumActivity.class);
+		context.startActivity(intent);
 	}
 
 
-	public static void initUpLoadImg(String ActivityName, Activity activity, int headViewTitleresId) {
-		takePhotoFolder = activity.getResources().getString(R.string.album_name);
-		context = activity;
+	 /**
+	  * 设置titlebar的颜色
+	  * Created by yellow on 12:19  2016/11/4.
+	  */
+	public static void setHeadViewTitleCololr(int headViewTitleresId){
 		//头部的样式
-		AlbumUtils.headViewTitleresId = headViewTitleresId;
+		AlbumManager.headColorId = headViewTitleresId;
+	}
+
+	//调用相册时必须要先初始化
+	public static void initLoadImgConfig(String ActivityName, Activity activity) {
 		// 入口Activity的全类名com.xxx.xxx.TxCreateHelpActivity
-		AlbumUtils.MainActivityName = ActivityName;
+		AlbumManager.context = activity;
+		AlbumManager.MainActivityName = ActivityName;
+		takePhotoFolder = activity.getResources().getString(R.string.album_name);
 		if(imageViewMap == null){
 			imageViewMap = new HashMap<String, ImageView>();
 		}
-		
 		if(imgeViewList == null){
 			imgeViewList = new ArrayList<ImageView>();
 		}
 		Res.init(activity);// 初始化话ResAndroid 有自带这个方法，不需要反射去获取
 	}
-	
 	
 	public static void initImageLoader(){
-		
 		if(imageLoader==null||!imageLoader.isInited()){
 			int maxMemory =4*1024*1024; //((int) Runtime.getRuntime().maxMemory()) / 1024 / 1024;
 			int diskMemory = 10*1024*1024;
@@ -150,8 +147,6 @@ public class AlbumUtils {
             .build(); 
 		}
 	}
-	
-	
 
 	public static void displayImg(String url , ImageView iv, DisplayImageOptions myOptions){
 		getImageLoader().displayImage(url, iv, myOptions);
@@ -160,29 +155,10 @@ public class AlbumUtils {
 	public static void displayImage(String url, ImageView iv, SimpleImageLoadingListener listener){
 		getImageLoader().displayImage(url, iv, getImageLoaderOptions(), listener);
 	}
-	
-	public static void displayAlbumImage(String url,ImageView iv){
-		getImageLoader().displayImage(url, iv, getImageLoaderOptions(), new SimpleImageLoadingListener(){
-			@Override
-			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {	
-//				loadedImage = null;
-			}
-			
-			@Override
-			public void onLoadingCancelled(String imageUri, View view) {
-				Log.i("BitmapAndGlobalUtils", "BitmapAndGlobalUtils--onLoadingCancelled--"+imageUri);
-				super.onLoadingCancelled(imageUri, view);
-			}
-		});
-		
-	}
-	
-	
-	
+
 	public static DisplayImageOptions getImageLoaderOptions(){
 		return displayImgOptions0;
 	}
-
 	
 	public static ImageLoader getImageLoader(){
 		initImageLoader();

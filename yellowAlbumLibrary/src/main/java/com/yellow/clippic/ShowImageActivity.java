@@ -7,13 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
-
-/**
- * http://blog.csdn.net/lmj623565791/article/details/39761281
- * 
- * @author zhy
- * 
- */
 public class ShowImageActivity extends Activity
 {
 	private ImageView mImageView;
