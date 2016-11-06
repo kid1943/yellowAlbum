@@ -11,8 +11,8 @@ an android album project
   ClipImgActivity
 
 2 在进入相册前先调用此方法:
-  AlbumManager.initLoadImgConfig(xxActivity.this.getClass().getName(), xxActivity.this);
-  两个参数分别表示跳转到AlbumActivity前的Activity的类名和对象
+  AlbumManager.initLoadImgConfig(context);
+
 
 3 调用AlbumManager.openAlbum(UsePerpose.CUT_PIC, 0)进入相册
    第一个参数为UsePerpose.CUT_PIC时表示进入相册剪切图片,为UsePerpose.SEL_PIC时表示进入相册浏览选择图片
