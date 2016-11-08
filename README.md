@@ -42,13 +42,13 @@ an android album project
 
 
 
-剪切图片:
+`剪切图片`:
 
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album_cut.gif?raw=true)
 
 
 
-选择图片:
+`选择图片`:
 
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album_sel.gif?raw=true)
 
