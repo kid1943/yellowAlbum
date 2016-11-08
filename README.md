@@ -24,12 +24,12 @@ an android album project
   2)...to be continue
 
 5 选中后的图片对象ImageItem集合存放在AlbumManager.selImgList中，通过集合中的ImageItem的getPath方法可以获取图片路径。
-  剪切后的图片路径是:AlbumManager.cutImgPath。当然获取图片路径后进行什么操作要取决于你。
+  剪切后的图片路径是:AlbumManager.cutImgPath。当然获取图片路径后进行展示、上传或者其他操作要取决于你。
 
 
 
     依赖添加：
-           compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.1.1'
+           compile 'com.yellow.photo.activity:yellowAlbumLibrary:1.1.2'
            compile 'com.android.support:appcompat-v7:23.4.0'
 
 
@@ -42,13 +42,13 @@ an android album project
 
 
 
-剪切:
+剪切图片:
 
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album_cut.gif?raw=true)
 
 
 
-选择:
+选择图片:
 
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album_sel.gif?raw=true)
 
