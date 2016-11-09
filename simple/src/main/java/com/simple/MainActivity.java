@@ -147,18 +147,12 @@ public class MainActivity extends Activity {
        adapter.update();
        noScrollgridview.setAdapter(adapter);
        noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
-           public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                   long arg3) {
-               if (arg2 == 0) {
+           public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+               if (position == 0) {
                    ll_popup.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.activity_translate_in));
                    pop.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);// 弹出选择图片源
                } else {
-                   ViewHolder vh = (ViewHolder) arg1.getTag();
-                   // 吐出路径
-                   Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
-                   intent.putExtra("position", "3");
-                   intent.putExtra("ID", arg2 - 1);
-                   startActivity(intent);
+                   AlbumManager.openGallery(position-1);
                }
            }
        });

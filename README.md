@@ -18,12 +18,13 @@ an android album project
    第一个参数为UsePerpose.CUT_PIC时表示进入相册剪切图片,为UsePerpose.SEL_PIC时表示进入相册浏览选择图片
    第二个参数表示当第一个参数是UsePerpose.SEL_PIC时，进入相册所需要选择的图片数量
 
+4 在选择完图片后(AlbumManager.selImgList集合的size大于0) 调用 AlbumManager.openGallery(position)即可进入图片浏览界面
 
-4 其他可选配置:
+5 其他可选配置:
   1) AlbumUtils.setHeadViewTitleCololr(R.color.red); 设置相册toolbar的颜色
   2)...to be continue
 
-5 选中后的图片对象ImageItem集合存放在AlbumManager.selImgList中，通过集合中的ImageItem的getPath方法可以获取图片路径。
+6 选中后的图片对象ImageItem集合存放在AlbumManager.selImgList中，通过集合中的ImageItem的getPath方法可以获取图片路径。
   剪切后的图片路径是:AlbumManager.cutImgPath。当然获取图片路径后进行展示、上传或者其他操作要取决于你。
 
 

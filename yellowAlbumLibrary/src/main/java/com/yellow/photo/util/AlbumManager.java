@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.activity.Const;
+import com.yellow.photo.activity.GalleryActivity;
 import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache;
@@ -81,6 +82,13 @@ public class AlbumManager {
                 intent.putExtra(Const.SELECT_COUNT, count);
 				break;
 		}
+		context.startActivity(intent);
+	}
+
+	public static void openGallery(int position){
+		Intent intent = new Intent(context, GalleryActivity.class);
+		intent.putExtra("position", "3");
+		intent.putExtra("ID", position);
 		context.startActivity(intent);
 	}
 
