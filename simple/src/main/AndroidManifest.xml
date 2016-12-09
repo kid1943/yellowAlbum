@@ -19,8 +19,12 @@
         <activity
         android:name="com.yellow.photo.activity.AlbumActivity"
         android:screenOrientation="portrait" />
+        <activity android:name="com.yellow.browseNetImage.BroswerNetViewActivity"/>
+        <activity android:name="com.yellow.browseNetImage.ImagePagerActivity"/>
         <activity android:name="com.yellow.photo.activity.GalleryActivity" />
         <activity android:name="com.yellow.clippic.ClipImgActivity" />
-    </application>
 
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

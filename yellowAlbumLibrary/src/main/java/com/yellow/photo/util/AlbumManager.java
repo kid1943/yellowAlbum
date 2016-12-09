@@ -15,9 +15,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
+
+import com.yellow.browseNetImage.ImagePagerActivity;
 import com.yellow.photo.activity.AlbumActivity;
 import com.yellow.photo.activity.Const;
 import com.yellow.photo.activity.GalleryActivity;
+import com.yellow.photo.activity.MainActivity;
 import com.yellow.photo.activity.R;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache;
@@ -92,6 +95,14 @@ public class AlbumManager {
 		context.startActivity(intent);
 	}
 
+	public static void browseNetPic(Activity activity, ArrayList<String> urls, int position){
+		Intent intent = new Intent(activity, ImagePagerActivity.class);
+		// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+		intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+		activity.startActivity(intent);
+	}
+
 
 	 /**
 	  * 设置titlebar的颜色
@@ -104,7 +115,6 @@ public class AlbumManager {
 
 	//调用相册时必须要先初始化
 	public static void initLoadImgConfig(Activity activity) {
-		// 入口Activity的全类名com.xxx.xxx.TxCreateHelpActivity
 		AlbumManager.context = activity;
 		takePhotoFolder = activity.getResources().getString(R.string.album_name);
 		if(imageViewMap == null){

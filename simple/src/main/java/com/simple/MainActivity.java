@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,15 +34,16 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.yellow.photo.activity.GalleryActivity;
+import com.yellow.browseNetImage.BroswerNetViewActivity;
+import com.yellow.browseNetImage.ImagePagerActivity;
 import com.yellow.photo.util.AlbumManager;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
 import com.yellow.photo.util.PublicWay;
 import com.yellow.photo.util.Res;
 import com.yellow.photo.util.UsePerpose;
-
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  *测试界面
@@ -57,6 +57,7 @@ public class MainActivity extends Activity {
     private PopupWindow pop = null;
     private LinearLayout ll_popup;
     private Button btn_cut;
+    private Button btn_browse;
     private ImageView iv_cut;
 
     private Handler handler = new Handler() {
@@ -93,6 +94,7 @@ public class MainActivity extends Activity {
    public void initView() {
        iv_cut = (ImageView) parentView.findViewById(R.id.iv_cut);
        btn_cut = (Button) parentView.findViewById(R.id.btn_cut);
+       btn_browse = (Button) parentView.findViewById(R.id.btn_browse);
        pop = new PopupWindow(MainActivity.this);
        pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
      // 弹出选择图片源的popwin
@@ -161,6 +163,18 @@ public class MainActivity extends Activity {
            @Override
            public void onClick(View v) {
                AlbumManager.openAlbum(UsePerpose.CUT_PIC, 0);
+           }
+       });
+
+       btn_browse.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               ArrayList<String> urls = new ArrayList<String>();
+               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
+               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
+               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
+               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
+               AlbumManager.browseNetPic(MainActivity.this, urls, 0);
            }
        });
    }

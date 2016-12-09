@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -43,7 +44,6 @@ public class GalleryActivity extends BaseActivty {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//		setContentView(Res.getLayoutID("imgupload_plugin_camera_gallery"));// 切屏到主界面
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imgupload_plugin_camera_gallery);
         super.onCreate(savedInstanceState);
@@ -116,6 +116,7 @@ public class GalleryActivity extends BaseActivty {
         PhotoView img = new PhotoView(this);
         img.setBackgroundColor(0xff000000);
         img.setImageBitmap(bm);
+//        img.setImageURI(Uri.parse("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg"));
         img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         listViews.add(img);
     }
