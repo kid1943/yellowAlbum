@@ -33,9 +33,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-
-import com.yellow.browseNetImage.BroswerNetViewActivity;
-import com.yellow.browseNetImage.ImagePagerActivity;
 import com.yellow.photo.util.AlbumManager;
 import com.yellow.photo.util.FileUtils;
 import com.yellow.photo.util.ImageItem;
@@ -170,8 +167,8 @@ public class MainActivity extends Activity {
            @Override
            public void onClick(View v) {
                ArrayList<String> urls = new ArrayList<String>();
-               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
-               urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
+               urls.add("http://img4.imgtn.bdimg.com/it/u=3667301445,3391563527&fm=21&gp=0.jpg");
+               urls.add("http://img4.imgtn.bdimg.com/it/u=3667301445,3391563527&fm=21&gp=0.jpg");
                urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
                urls.add("http://img.my.csdn.net/uploads/201410/19/1413698867_8323.jpg");
                AlbumManager.browseNetPic(MainActivity.this, urls, 0);
