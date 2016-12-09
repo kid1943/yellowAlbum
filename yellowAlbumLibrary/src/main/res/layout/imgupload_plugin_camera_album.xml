@@ -7,10 +7,17 @@
     <com.yellow.customview.MyToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:title="照片"
         android:titleTextColor="@color/toolbargray"
         android:visibility="visible" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/toolbar"
+        android:background="#dddddd" />
 
     <TextView
         android:id="@+id/myText"
@@ -24,7 +31,7 @@
         android:id="@+id/myGrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/line"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/s2"
         android:background="@color/white"
