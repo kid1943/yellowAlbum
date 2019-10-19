@@ -34,6 +34,9 @@ An Android album project.
      
 
 
+## 功能演示
+
+
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album.gif?raw=true)
 
 
