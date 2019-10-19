@@ -55,7 +55,9 @@ an android album project
 ![image](https://github.com/kid1943/yellowAlbum/blob/master/album_sel.gif?raw=true)
 
 
+## License
 
+The source code  is licensed under the [MIT license](LICENSE.md).
 
 
 
