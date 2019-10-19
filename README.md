@@ -57,7 +57,7 @@ an android album project
 
 ## License
 
-The source code  is licensed under the [MIT license](LICENSE.md).
+The source code  is licensed under the [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
 
 
 
